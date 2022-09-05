@@ -1,0 +1,50 @@
+accessible: true
+author: Jean-Luc Bibaud Anthony Doeraene
+categories: []
+contact_url: ''
+context: |-
+    In this exercice you are asked to implement a function to reverse a given linked list. So for example if your input is a list in the form :code:`a->b->c`, your output should be :code:`c->b->a`. You can implement this with recursion if you so desire.
+
+    You have a linked list composed of nodes.
+
+        .. code-block:: c
+
+            typedef struct node{
+                int val;
+                struct node *next;
+            } node_t;
+environment_id: cpp
+environment_parameters:
+    limits:
+        time: '30'
+        hard_time: ''
+        memory: '100'
+    run_cmd: ''
+environment_type: docker
+evaluate: best
+file: ''
+groups: false
+input_random: 0
+name: Reverse
+network_grading: false
+problems:
+    reverse:
+        type: code
+        name: Reverse
+        header: |-
+            .. code-block:: c
+
+                /*
+                * Reverses linked list
+                * @return     : the head of the list reversed
+                *
+                * pre         : head will not be null
+                */
+                node_t* reverse(node_t* head){
+        language: c
+        default: ''
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0
