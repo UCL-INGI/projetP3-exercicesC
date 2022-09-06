@@ -5,10 +5,16 @@ contact_url: ''
 context: |-
     Une structure de données contenant le NOMA et les points d'un ancien étudiant vous est donnée. Certaines structures peuvent ne pas contenir certaines informations.
     Vous devez enlever les points de l'ancien étudiant de la mémoire, sans supprimer la structure, et préparer la structure pour qu'elle contienne le NOMA du nouvel
-    étudiant ainsi que le tableau prêt à acceuillir ses points.
+    étudiant ainsi que le tableau prêt à accueillir ses points.
 
-    La structure est composée d'un pointeur vers un entier (:code:`int* number`) et d'un pointeur vers un tableau de données (:code:`int** matrix`) contenant x lignes et 2 colonnes
-    (numero de cours,note).
+    .. code-block:: c
+
+        typedef struct{
+            int* number;
+            int** matrix; // x rows, 2 columns (course id, grade)
+        } data;
+
+    La structure est composée d'un pointeur vers un entier (:code:`int* number`) et d'un pointeur vers un tableau de données (:code:`int** matrix`) contenant x lignes et 2 colonnes.
     ex : :code:`[[1503,15],[1401,19],[1210,14]]`
 environment_id: cpp
 environment_parameters:

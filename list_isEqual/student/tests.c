@@ -81,7 +81,7 @@ void test1(){
     int rep = 1;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,4);
+    res= is_equivalent(first,second,4);
     SANDBOX_END;
 
 
@@ -105,7 +105,7 @@ void test2(){
     int rep = 1;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,4);
+    res= is_equivalent(first,second,4);
     SANDBOX_END;
 
 
@@ -129,7 +129,7 @@ void test3(){
     int rep = 1;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,1);
+    res= is_equivalent(first,second,1);
     SANDBOX_END;
 
 
@@ -152,7 +152,7 @@ void test4(){
     int rep = 0;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,5);
+    res= is_equivalent(first,second,5);
     SANDBOX_END;
 
 
@@ -176,7 +176,7 @@ void test5(){
     int rep = 0;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,5);
+    res= is_equivalent(first,second,5);
     SANDBOX_END;
 
 
@@ -200,7 +200,7 @@ void test6(){
     int rep = 0;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,1);
+    res= is_equivalent(first,second,1);
     SANDBOX_END;
 
 
@@ -223,7 +223,7 @@ void test7(){
     int rep = 1;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,4);
+    res= is_equivalent(first,second,4);
     SANDBOX_END;
 
 
@@ -246,7 +246,7 @@ void test8(){
     int rep = 0;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,5);
+    res= is_equivalent(first,second,5);
     SANDBOX_END;
 
 
@@ -269,7 +269,7 @@ void test9(){
     int rep = 0;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,5);
+    res= is_equivalent(first,second,5);
     SANDBOX_END;
 
 
@@ -292,7 +292,7 @@ void test10(){
     int rep = 1;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,4);
+    res= is_equivalent(first,second,4);
     SANDBOX_END;
 
 
@@ -315,7 +315,7 @@ void test11(){
     int rep = 1;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,4);
+    res= is_equivalent(first,second,4);
     SANDBOX_END;
 
 
@@ -337,7 +337,7 @@ void test12(){
     int rep = 1;
     int res;
     SANDBOX_BEGIN;
-    res= isequivalent(first,second,4);
+    res= is_equivalent(first,second,4);
     SANDBOX_END;
 
 

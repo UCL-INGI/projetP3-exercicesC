@@ -59,7 +59,7 @@ problems:
     load_header_data:
         type: code
         name: Load Header Data
-        header: |-
+        header: |+
             Chargez ensuite en une ligne les données dans la structure file (Il n'est donc pas nécessaire de réaliser des conversion de format binaire à ce stade)
 
                 .. code-block:: c
@@ -79,18 +79,8 @@ problems:
             *représente les arguments de la structure (du premier au dernier). La fonction fread remplira ces wagons en fonction de leur taille.)*
 
 
-            On vous demande maitenant de traiter le reste du fichier.
-            Faites appel à votre fonction load_header_data puis triez les nomas par **ordre descendant** (de celui ayant obtenu la plus haute note à la plus faible)
-
-
-
-            *Il y a beaucoup de cours à l'epl et vous devrez ultérieurement multi-threader votre programme c'est pourquoi la fonction système que vous choisirez d'utiliser doit être thread-safe ! (qsort_r)*
         language: c
         default: |-
-            typedef struct file {
-                //code here
-            } file_t;
-
             void load_header_data(FILE *input_file, struct file *ptr) {
                 // COMPLETEZ EN UNE LIGNE
             }
@@ -114,6 +104,12 @@ problems:
             .. role:: c(code)
                 :language: c
 
+            On vous demande maitenant de traiter le reste du fichier.
+            Faites appel à votre fonction load_header_data puis triez les nomas par **ordre descendant** (de celui ayant obtenu la plus haute note à la plus faible)
+
+
+            *Il y a beaucoup de cours à l'epl et vous devrez ultérieurement multi-threader votre programme c'est pourquoi la fonction système que vous choisirez d'utiliser doit être thread-safe ! (qsort_r)*
+
             Triez les nomas par ordre descendant et écrivez les (toujours sous la forme d'entiers non signés de 4 bytes) dans le fichier de sortie output_file en **big_endian** !
             Votre fonction devra également retourné les valeures suivantes :
 
@@ -133,8 +129,6 @@ problems:
                 .. code-block:: c
 
                     int make_ranking(char *file_path, char *output_file){
-                      return 0;
-                    }
 
 
             .. _make_input: https://inginious.org/admin/uclouvain-lepl1503/edit/task/student_ranking/files?action=download&path=/student/make_input.py

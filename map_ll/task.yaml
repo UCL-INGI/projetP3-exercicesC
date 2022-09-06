@@ -7,8 +7,7 @@ context: |-
 
         .. code-block:: c
 
-            typedef struct product
-            {
+            typedef struct product{
                 char* name;
                 double price;
             } product_t;
@@ -17,8 +16,7 @@ context: |-
 
         .. code-block:: c
 
-            typedef struct node
-            {
+            typedef struct node{
                 product_t product;
                 struct node* next;
             };

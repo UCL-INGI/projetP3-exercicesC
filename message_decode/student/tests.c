@@ -14,8 +14,8 @@ node_t* random_nbr(int size, char **exp){
     *exp = malloc(size);
     int index = 0;
 
-    node_t* random = NULL;
-    node_t * ret = random;
+    node_t* curr = NULL;
+    node_t * ret = NULL;
     for (size_t i = 0; i < size; i++)
     {
         char rng = (rand() % (upper - lower + 1)) + lower;
@@ -23,9 +23,18 @@ node_t* random_nbr(int size, char **exp){
             *((*exp) + index) = rng;
             index++;
         }
-        random = malloc(sizeof(node_t));
-        random->value = rng;
-        random = random->next;
+        if (!ret){
+            ret = malloc(sizeof(node_t));
+            ret->value = rng;
+            ret->next = NULL;
+            curr = ret;
+        }else{
+            node_t *new = malloc(sizeof(node_t));
+            new->value = rng;
+            new->next = NULL;
+            if (curr) curr->next = new;
+            curr = new;
+        }
     }
     *((*exp) + index) = '\0';
     return ret;
@@ -35,27 +44,35 @@ node_t *make_list(int *data, int number, char **expected){
     *expected = malloc(number);
     int index = 0;
     node_t *curr = NULL;
-    node_t *ret = curr;
+    node_t *ret = NULL;
     for (size_t i = 0; i < number; i++)
     {
         if (isAccepted(data[i])){
             *((*expected) + index) = (char) data[i];
             index++;
         } 
-        curr = malloc(sizeof(node_t));
-        curr->value = data[i];
-        curr = curr->next;
+        if (!ret){
+            ret = malloc(sizeof(node_t));
+            ret->value = data[i];
+            ret->next = NULL;
+            curr = ret;
+        }else{
+            node_t *new = malloc(sizeof(node_t));
+            new->value = data[i];
+            new->next = NULL;
+            if (curr) curr->next = new;
+            curr = new;
+        }
     }
     *((*expected) + index) = '\0';
     return ret;
 }
 
 void free_list(node_t *list){
-    while(list){
-        node_t *temp = list;
-        list = list->next;
-        free(temp);
-    }
+    if (!list) return;
+    node_t *temp = list->next;
+    free(list);
+    free_list(temp);
 }
 
 char *str_list(node_t* node){
@@ -87,11 +104,22 @@ void error(char *ret, char *exp, node_t *init){
     sprintf(msg, template, init_str,exp_str, ret_str);
     push_info_msg(msg);
     free(init_str);
+    if (ret) free(ret);
+    if (exp) free(exp);
+    if (init) free_list(init);
 }
 
 void compare(char *ret, char *exp, node_t *init){
-    CU_ASSERT_STRING_EQUAL(ret,exp);
-    if (strcmp(ret, exp) != 0) error(ret, exp, init);
+    if (exp == NULL){
+        CU_ASSERT_EQUAL(ret, NULL);
+        if (ret != NULL) return error(ret, exp, init);
+    }else{
+        CU_ASSERT_PTR_NOT_NULL(ret);
+        if (ret == NULL) return error(ret, exp, init);
+        CU_ASSERT_STRING_EQUAL(ret,exp);
+        if (strcmp(ret, exp) != 0) return error(ret, exp, init);
+    }
+
     if (ret) free(ret);
     if (exp) free(exp);
     if (init) free_list(init);
@@ -108,7 +136,8 @@ void test1(){
     res = filter(node,size_mess);
     SANDBOX_END;
     char* expected = NULL;
-    compare(res, expected, node);
+
+    if (res != expected) error(res, expected, node);
 }
     
 void test2(){
@@ -120,6 +149,7 @@ void test2(){
     int data[] = {104,45,101,108,108,33,111,41,32,119,111,114,108,40,38,100};
     char* expected = NULL;
     node_t *final = make_list(data, size_mess, &expected);
+
     char* res = NULL;
     SANDBOX_BEGIN;
     res = filter(final,size_mess);
@@ -132,15 +162,16 @@ void test3(){
     set_test_metadata("decode", "test oublie du \\0", 1);
     // test oublie du "\0"
     node_t* node = NULL;
-    node_t* final;
-    final = node;
+    node_t* final = NULL;
     int size_mess = 16;
     int data[] = {104,45,101,108,108,33,111,41,32,119,111,114,108,40,38,100};
 
     for (size_t i = 0; i < size_mess; i++)
     {
         node = malloc(sizeof(node_t));
+        if (!final) final = node;
         node->value = data[i];
+        node->next = NULL;
         node = node->next;
     }
 
@@ -235,8 +266,6 @@ void test7(){
 }
 
 int main(int argc,char** argv){
-
-    srand(time(0));
     BAN_FUNCS();
     RUN(test1, test2, test3, test4, test5, test6, test7);
 }

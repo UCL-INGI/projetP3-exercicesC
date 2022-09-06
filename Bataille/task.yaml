@@ -6,31 +6,43 @@ context: |-
     .. role::c(code)
         :language:c
 
-    Vous devez écrire 2 fonctions qui simuleront le jeu de carte  `Bataille <https://fr.wikipedia.org/wiki/Bataille_%28jeu%29>`_.
+    In this exercicde, you have to write 2 functions which will simulate the card game `War <https://en.wikipedia.org/wiki/War_(card_game)>`_.
 
-    Les mains des joueurs sont représentées avec des `queues <https://en.wikipedia.org/wiki/Queue>`_ dont le code initial vous est donné.
+    The hands of the players will be represented by `queues <https://en.wikipedia.org/wiki/Queue>`_ and the definition of the hands is given.
 
-    Vous avez accès aux structures :
+    You can use the following structure in your code:
 
-        - :c:`card_t (int value, card_t* next)` : la structure qui représentera une carte
-        - :c:`deck_t (int id_player, int size, card_t* tail, card_t* head)` : la structure qui représentera la main entière d'un joueur (tail = la carte en dessous de son paquet) (head = la carte tout au dessus)
+    .. code-block:: c
 
-    Vous avez accès aux fonctions :
+        typedef struct card{
+            int value;
+            struct card* next;
+        } card_t;
 
-        - :c:`void print_deck(deck_t* deck)` : affiche le deck du joueur ainsi que les informations le concernant.
-        - :c:`int addCard(deck_t* d, int val)` : l'équivalent de la fonction "enqueue" : ajoute une carte de valeur val en dessous du deck d (-1 en cas d'erreur) (0 si réussi).
-        - :c:`int drawCard(deck_t* d)` : l'équivalent de la fonction "dequeue" : pioche la carte au dessus du deck d et retourne la valeur de la carte piochée, ou -1 si le deck est vide.
-        - :c:`deck_t* createDeck(int id, int* cardsData, int nCards)` : crée un deck (structure deck_t) et le remplit avec les cartes correspondantes aux valeurs (dans l'ordre) du tableau cardsData (pointeur vers le tableau);
+        typedef struct deck{
+            int id_player;
+            int size;
+            struct card* tail;   // la carte en dessous de son paquet
+            struct card* head;   // la carte tout au dessus de son paquet
+        } deck_t;
 
-    Précisions:
+    You have access to the following functions too :
 
-    - Il faudra bien faire attention à l'ordre dans lequel les cartes sont ajoutées au deck du joueur gagnant.
+        - :c:`int addCard(deck_t* d, int val)` : enqueue the deck : add a card of value val at the bottom of the deck (-1 if an error occurred) (0 otherwise).
+        - :c:`int drawCard(deck_t* d)` : dequeue the deck : draw the card at the top of the deck, removing it from the deck and returning it's value. Return -1 if the deck is empty.
+        - :c:`deck_t* createDeck(int id, int* cardsData, int nCards)` : create a deck (structure deck_t) and fill it with values of the array cardsData (in order). This array is of size nCards;
 
-    - Ici l'ordre a été défini compte tenu de l'ordre dans lesquelles les cartes sont ajoutées sur la table.
+    You can download the `header <https://inginious.org/admin/uclouvain-lepl1503/edit/task/Bataille/files?action=download&path=/student/help_functions.h>`_ file containing helper functions and their `implémentations <https://inginious.org/admin/uclouvain-lepl1503/edit/task/Bataille/files?action=download&path=/student/help_functions.c>`_ using these links.
 
-    - Le premier joueur (dans l'ordre dans la mémoire, pas l'id du joueur) joue avant le second, etc.
+    Notice :
 
-    - En cas d'égalité entre 2 joueurs, le premier joue 2 cartes d'affilée avant que le suivant joue aussi 2 cartes d'un seul coup.
+    - Be careful about the order when enqueuing the cards into the winner deck.
+
+    - The order is defined by the player's order. So if player 1 loses, his card must be the first to be enqueued
+
+    - The first player (in memory and not in id) plays before the second, etc.
+
+    - In case of draw between players, each player must play 2 cards and the winner is the one with the card of highest value accross all cards that have been drawn. If there is still a draw between players, repeat the process until a player win.
 environment_id: cpp
 environment_parameters:
     limits:
@@ -50,13 +62,13 @@ problems:
         type: code
         name: Simulation de tours
         header: |-
-            La fonction simulateOneRound simule 1 tour et modifie les decks des joueurs, ne renvoie rien.
+            The simulateOneRound function simulate 1 round and modify the player's deck. It doesn't return anything.
 
                 .. code-block:: c
 
                     /*
                      * @pre playersDeck != NULL, manyPlayers > 0
-                     * @post simule un tour du jeu bataille en modifiant les decks des joueurs
+                     * @post simulate 1 round and modify the player's deck (if there is a draw, see the upper note about it)
                      */
                     void simulateOneRound(deck_t** playersDeck, int manyPlayers);
         language: c
@@ -65,13 +77,13 @@ problems:
         type: code
         name: Le dernier debout
         header: |-
-            La fonction guessWhoWins simule au maximum n tours, et si un joueur a toutes les cartes du jeu dans son deck, il a gagné et le jeu s'arrête, la fonction renvoie l'id de ce joueur.
+            The guessWhoWins function simulate at most n rounds, and if a player possess all the cards in his deck, he won, the game stops, and the function returns the id of this player.
 
                 .. code-block:: c
 
                     /*
                      * @pre playersDeck != NULL, manyPlayers > 0, maxRounds > 0
-                     * @post retourne l'id du joueur gagnant, ou -1 si la partie n'est pas terminée
+                     * @post return the id of the winner, or -1 if game isn't ended yet
                      */
                     int guessWhoWins(deck_t **playersDeck, int manyPlayers, int maxRounds);
         language: c

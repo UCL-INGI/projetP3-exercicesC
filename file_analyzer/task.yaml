@@ -12,23 +12,26 @@ context: |
 
     Vous pouvez vous attendre à une liste chaînée vide ou à l'opposé très grande. Cependant, le nombre d'extensions maximales que vous pouvez trouver dans un dossier est de 10 extensions différentes.
 
-    Comme expliqué précédemment, vous recevez en argument une liste chaînée, chaque node contient:
+    Comme expliqué précédemment, vous recevez en argument une liste chaînée, chaque node est défini ainsi:
 
-    #. :code:`filename` : Le nom du fichier : :code:`char *`
+    .. code-block:: c
 
-    #. :code:`extension` : l'extension du fichier : :code:`char *`
+        struct FilesStream {
+           char *filename;
+           char *extension;
+           int  size;
+           struct FilesStream *next;
+        };
 
-    #. :code:`size` : la taille du fichier : :code:`int`
+    Votre fonction doit retourner un pointeur vers la première :code:`struct Output`, en tout vous devez avoir 10 :code:`struct Output` qui se suivent dans la mémoire. Une :code:`struct Output` est définie comme telle:
 
-    #. :code:`next` : un pointer vers la prochaine node : :code:`struct FilesStream *`
+    .. code-block:: c
 
-    Votre fonction doit retourner un pointeur vers la première :code:`struct Output`, en tout vous devez avoir 10 :code:`struct Output` qui se suivent dans la mémoire. Une :code:`struct Output` contient:
-
-    #. :code:`extension` : l'extension du fichier : :code:`char *`
-
-    #. :code:`number` : le nombre de fichiers ayant cette extension : :code:`int`
-
-    #. :code:`totalSize` : la taille totale de tout les fichiers ayant cette extension : :code:`int`
+        struct Output {
+           char *extension;
+           int  number;
+           int  totalSize;
+        };
 
     Si jamais il y a moins de 10 extensions différents, les :code:`struct Output` non utilisées doivent être initialisées comme tel:
 
@@ -97,13 +100,13 @@ problems:
                     /*
                      *@pre maximum de 10 extensions différentes
                      *@post retourne l'adresse mémoire de la première structure "Output" suivie des autres structures "Output" contenant chacune:
-                        1) l'extension (char *)
-                        2) le nombre de fichiers ayant cette extension (int)
-                        3) la taille totale des fichiers ayant cette extension (int)
-                      /!\ l'ordre des structures "Output" DOIT être le même que l'ordre d'apparition des extensions dans la liste chainée
-                      /!\ il doit y avoir 10 structures "Output"
-                    */
-                    struct Output * fileAnalyzer(struct FilesStream *);
+                     *   1) l'extension (char *)
+                     *   2) le nombre de fichiers ayant cette extension (int)
+                     *   3) la taille totale des fichiers ayant cette extension (int)
+                     * /!\ l'ordre des structures "Output" DOIT être le même que l'ordre d'apparition des extensions dans la liste chainée
+                     * /!\ il doit y avoir 10 structures "Output"
+                     */
+                    struct Output * fileAnalyzer(struct FilesStream *FS){
         language: c
         default: ''
 stored_submissions: 0

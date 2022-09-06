@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "student_code_sol.h"
 
-int isequivalent_sol(node_t* first, node_t* second, int size) {
+int is_equivalent_sol(node_t* first, node_t* second, int size) {
     int ok;
 
     //check with an other start position for the second circular linked list

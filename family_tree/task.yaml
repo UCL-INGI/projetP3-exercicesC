@@ -1,5 +1,5 @@
 accessible: true
-author: Léa Ninite Anthony Doeraene
+author: Léa Ninite \\ Anthony Doeraene
 categories: []
 contact_url: ''
 context: |-
@@ -8,14 +8,14 @@ context: |-
         .. code-block:: c
 
             typedef struct person {
-            char *surname;
-            struct person *children;
-             int n_children;
+                char *surname;
+                struct person *children;
+                int n_children;
             } person_t;
 
             typedef struct family_tree {
-            person_t *grand_father;
-            person_t *grand_mother;
+                person_t *grand_father;
+                person_t *grand_mother;
             } family_tree_t;
 
     La structure person_t est caractérisée par le prénom de la personne, un pointeur vers des structures de type :code:`person_t` correspondant à ses enfants et enfin, par le nombre d'enfants qu'a la personne.

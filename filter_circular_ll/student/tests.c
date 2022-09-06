@@ -44,9 +44,9 @@ void free_list(list_t *list) {
         return;
     }
     node_t *curr = list->tail->next;
-    list->tail->next = NULL;
     node_t *nxt;
     for (int i = 0; i < list->size; i++) {
+       if(!curr) return;
        nxt = curr->next;
        free(curr);
        curr = nxt;
@@ -81,17 +81,18 @@ void assert_lists_equal(list_t* actual, list_t* expected) {
     }
     node_t *temp1 = actual->tail;
     node_t *temp2 = expected->tail;
-    for (int i = 0; i < actual->size+1; i++) {
+    for (int i = 0; i < actual->size; i++) {
+        if (temp1 == NULL) return;
         CU_ASSERT_EQUAL(temp1->value, temp2->value);
         if (temp1->value != temp2->value){
-            flag = 1;
-        }
-        // The condition below should never be verified since the lists are circular, but is added just in case (to avoid null-pointer exception)
-        if (temp1->next == NULL && temp2->next == NULL) 
+            flag = 0;
             return;
+        }
         temp1 = temp1->next;
         temp2 = temp2->next;
     }
+    CU_ASSERT_PTR_NOT_NULL(temp1);
+    if (temp1 == NULL) push_info_msg("Beware the last node should point toward the first node of the list");
     return;
 }
 
@@ -193,18 +194,20 @@ void test_single_accepted() {
     list_t init; init.size = 0; init.tail = NULL;
     if (enqueue(&init, 17) != 0) 
         return;
+    
+    list_t expect; expect.size = 0; expect.tail = NULL;
+    enqueue(&expect, 17);
 
     list_t *got = NULL;
 
     SANDBOX_BEGIN;
     got = filter(&init, pred_accept_all);
     SANDBOX_END;
+    
+    error(&expect, got, &init, ACCEPT);
 
-    CU_ASSERT_PTR_NOT_NULL(got);
-    CU_ASSERT_EQUAL(got->size, 1);
-    CU_ASSERT_PTR_NOT_NULL(got->tail);
-    CU_ASSERT_EQUAL(got->tail->value, 17);
-    CU_ASSERT_PTR_EQUAL(got->tail->next, got->tail);
+    assert_lists_equal(got, &expect);
+    if (!flag) error(&expect, got, &init, ACCEPT);
     free_list(got);
 }
 

@@ -6,8 +6,21 @@ context: |-
     .. role:: c(code)
         :language: c
 
-    Pour cet exercice vous devez écrire une fonction :c:`isequivalent` vérifiant si deux listes circulaires de même taille sont équivalentes.
+    Pour cet exercice vous devez écrire une fonction :c:`is_equivalent` vérifiant si deux listes circulaires de même taille sont équivalentes.
     Une liste circulaire ne comportant pas de début, la fonction prendra comme argument un des noeud de la liste.
+
+    Pour représenter la liste, utilisez la structure suivante:
+
+    .. code-block:: c
+
+        typedef struct node {
+            struct node *next;
+            int value;
+        } node_t;
+
+    Un exemple de circular linked linked serait donc le suivant:
+
+    .. image:: https://inginious.org/admin/uclouvain-lepl1503/edit/task/list_isEqual/files?action=download&path=/student/image.png
 
     Voici un exemple d'utilisation de cette fonction:
 
@@ -16,7 +29,7 @@ context: |-
             noeud first (pointeur vers le noeud contenant la valeur 1) : 1->3->4->5->premier noeud (1)
             noeud second (pointeur vers le noeud contenant la valeur 5) : 5->1->3->4->premier noeud (5)
 
-            isequivalent(first, second, 4) retourne 1 (il s'agit de la même liste circulaire)
+            is_equivalent(first, second, 4) retourne 1 (il s'agit de la même liste circulaire)
 environment_id: cpp
 environment_parameters:
     limits:
@@ -34,7 +47,7 @@ network_grading: false
 problems:
     isequivalent:
         type: code
-        name: IsEquivalent
+        name: Is equivalent
         header: |4-
                 .. code-block:: c
 
@@ -48,7 +61,7 @@ problems:
                     * @return: 1 if they are equivalent, 0 otherwise
                     *
                     */
-                    int isequivalent(node_t* first, node_t* second, int size){
+                    int is_equivalent(node_t* first, node_t* second, int size){
         language: c
         default: ''
 stored_submissions: 0

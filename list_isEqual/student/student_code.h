@@ -20,4 +20,4 @@ typedef struct node {
  * @return: 1 if they are equals, 0 otherwise
  *
  */
-int isequivalent(node_t*, node_t*, int);
+int is_equivalent(node_t*, node_t*, int);

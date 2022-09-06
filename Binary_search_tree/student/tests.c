@@ -51,6 +51,23 @@ int areTreesEquals(struct node *root, struct node *correctRoot) {
     return 1;
 }
 
+/**
+int flag = 1;
+
+void compare_tree(struct node *root, struct node *correctRoot){
+    if (correctRoot == NULL){
+        CU_ASSERT_EQUAL(root, NULL);
+        if (root != NULL) flag = 0;
+        return;
+    }
+    CU_ASSERT_NOT_EQUAL(root, NULL);
+    if (root == NULL) return flag = 0;
+    CU_ASSERT_EQUAL(root->value, correctRoot->value);
+    if (root->value != correctRoot->value) return flag=0;
+    compare_tree(root->left, correctRoot->left);
+    compare_tree(root->right, correctRoot->right);
+}*/
+
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
