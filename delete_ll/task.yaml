@@ -3,7 +3,7 @@ author: Gauthier Gheysens Anthony Doeraene
 categories: []
 contact_url: ''
 context: |-
-    Ecrivez une fonction qui supprime toutes les occurences d'une valeur dans une circular linked list et rends le nombre d'éléments supprimés.
+    Ecrivez une fonction qui supprime toutes les occurences d'une valeur dans une circular linked list et renvoie le nombre d'éléments supprimés.
     Veillez rendre la liste avec le même head que celui de base si possible!
 
 
@@ -11,7 +11,7 @@ context: |-
 
         .. code-block:: c
 
-            [1, 6, 4, 1, 1, 3, 2, 5, 1] en supprimant 1 donne [6, 4, 3, 2, 5 ]
+            [1, 6, 4, 1, 1, 3, 2, 5, 1] en supprimant 1 donne [6, 4, 3, 2, 5]
             [56, 40, 1, 1, 30, 20, 10] en supprimant 1 donne [56, 40, 30, 20, 10]
 
     Vous avez accès aux structures suivantes:

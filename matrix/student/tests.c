@@ -103,7 +103,7 @@ void check_matrix(int *exp, int **ret, list_t *init, int n, int m){
         for (int j = 0; j < m; j++) {
 
             CU_ASSERT_EQUAL(*((exp +i*m) + j), ret[i][j]);
-            if (*(exp +i*n + j) != ret[i][j]) return error((int *) exp, ret, init, n, m);
+            if (*(exp +i*m + j) != ret[i][j]) return error((int *) exp, ret, init, n, m);
 
         }
     }
@@ -140,6 +140,7 @@ void test1() {
     for (int i = 2; i < 10; ++i) {
         node_t *new = (node_t *) malloc(sizeof(node_t));
         new->value = i;
+        new->next = NULL;
         current->next = new;
         current = current->next;
         lst->size++;
@@ -173,6 +174,7 @@ void test2() {
     for (int i = 2; i < 10; ++i) {
         node_t *new = (node_t *) malloc(sizeof(node_t));
         new->value = i;
+        new->next = NULL;
         current->next = new;
         current = current->next;
         lst->size++;
@@ -204,6 +206,7 @@ void test3() {
     for (int i = 2; i < 10; ++i) {
         node_t *new = (node_t *) malloc(sizeof(node_t));
         new->value = i;
+        new->next = NULL;
         current->next = new;
         current = current->next;
         lst->size++;
@@ -235,6 +238,7 @@ void test4() {
     for (int i = 2; i < 10; ++i) {
         node_t *new = (node_t *) malloc(sizeof(node_t));
         new->value = i;
+        new->next = NULL;
         current->next = new;
         current = current->next;
         lst->size++;
@@ -266,6 +270,7 @@ void test5() {
     for (int i = 2; i < 10; ++i) {
         node_t *new = (node_t *) malloc(sizeof(node_t));
         new->value = i;
+        new->next = NULL;
         current->next = new;
         current = current->next;
         lst->size++;
@@ -320,6 +325,7 @@ void test7(){
     for (int i = 2; i < 10; ++i) {
         node_t *new = (node_t *) malloc(sizeof(node_t));
         new->value = i;
+        new->next = NULL;
         current->next = new;
         current = current->next;
         lst->size++;

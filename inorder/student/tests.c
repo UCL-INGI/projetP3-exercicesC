@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <setjmp.h>
+#include <signal.h>
 #include "student_code.h"
 
 #include "../../course/common/student/CTester/CTester.h"
@@ -52,10 +54,17 @@ tree_t *createTree(int *values, int number){
     
 }
 
+
+void fail(){
+    push_info_msg("Your code generated an error. Be sure to initialize all the values of the return pointer");
+    CU_FAIL();
+}
+
+
 int flag = 1;
 
 char *array_to_string(int *array, int nbElem){
-    char *ret = malloc(nbElem*4 + 2);
+    char *ret = malloc(nbElem*6 + 2);
     strcpy(ret, "[");
     for (int i = 0; i< nbElem; i++){
         char *temp = i == nbElem - 1 ? "%d" : "%d, ";
@@ -72,9 +81,11 @@ void logError(int *exp, int *ret, int nbElem){
     char errmsg[strlen(err) + 200];
     char *exp_str = array_to_string(exp, nbElem);
     char *ret_str = array_to_string(ret, nbElem);
-    sprintf(errmsg,err, exp_str, ret_str);
+    sprintf(errmsg, err, exp_str, ret_str);
     push_info_msg(errmsg);
     flag = 0;
+    free(exp_str);
+    free(ret_str);
 }
 
 void logErrorMalloc(int nbMalloc, int nbFree){
@@ -98,7 +109,7 @@ void test1(){
     tree_t *t = createTree(values, number);
     int expected[] = {0,1,2};
 
-    int *ret;
+    int *ret = NULL;
 
     flag = 1;
 
@@ -108,29 +119,25 @@ void test1(){
     SANDBOX_BEGIN;
     ret = in_order(t);
     SANDBOX_END;
-    
 
     CU_ASSERT_EQUAL(stats.malloc.called - stats.free.called, 1);    // check if all memory was freed (should only remain the malloc of the return value)
     if (stats.malloc.called - stats.free.called != 1) {
         logErrorMalloc(stats.malloc.called, stats.free.called);
     }
 
-
     for (int i = 0; i < t->number_elements; i++)
     {
+        if (!(ret+i)) return fail();
         CU_ASSERT_EQUAL(*(ret+i), expected[i]);
         if (*(ret+i) != expected[i]){
             logError(expected, ret, number);
             break;
         } ;
+
     }
 
     freeTree(t);
-    free(ret);
-
-    if (flag){
-        set_tag("q1");
-    }
+    if (ret) free(ret);
 
 }
 
@@ -145,7 +152,7 @@ void test2(){
 
     tree_t *t = createTree(values, number);
     int expected[] = {0,5,10};
-    int *ret;
+    int *ret = NULL;
 
     monitored.malloc = true;
     monitored.free = true;
@@ -154,14 +161,13 @@ void test2(){
     ret = in_order(t);
     SANDBOX_END;
 
-    flag = 1;
-
     CU_ASSERT_EQUAL(stats.malloc.called - stats.free.called, 1);    // check if all memory was freed (should only remain the malloc of the return value)
     if (stats.malloc.called - stats.free.called != 1) {
         logErrorMalloc(stats.malloc.called, stats.free.called);
     }
     for (int i = 0; i < t->number_elements; i++)
     {
+        if (!(ret+i)) return fail();
         CU_ASSERT_EQUAL(*(ret+i), expected[i]);
         if (*(ret+i) != expected[i]){
             logError(expected, ret, number);
@@ -170,11 +176,7 @@ void test2(){
     }
 
     freeTree(t);
-    free(ret);
-
-    if (flag){
-        set_tag("q1");
-    }
+    if (ret) free(ret);
     
 }
 
@@ -189,7 +191,7 @@ void test3(){
     tree_t *t = createTree(values, number);
     int expected[] = {-3,0,15};
 
-    int *ret;
+    int *ret = NULL;
 
     monitored.malloc = true;
     monitored.free = true;
@@ -198,14 +200,13 @@ void test3(){
     ret = in_order(t);
     SANDBOX_END;
 
-    flag = 1;
-
     CU_ASSERT_EQUAL(stats.malloc.called - stats.free.called, 1);    // check if all memory was freed (should only remain the malloc of the return value)
     if (stats.malloc.called - stats.free.called != 1) {
         logErrorMalloc(stats.malloc.called, stats.free.called);
     }
     for (int i = 0; i < t->number_elements; i++)
     {
+        if (!(ret+i)) return fail();
         CU_ASSERT_EQUAL(*(ret+i), expected[i]);
         if (*(ret+i) != expected[i]){
             logError(expected, ret, number);
@@ -214,12 +215,7 @@ void test3(){
     }
 
     freeTree(t);
-    free(ret);
-
-    if (flag){
-        set_tag("q1");
-    }
-    
+    if (ret) free(ret);
 }
 
 void test4(){
@@ -233,7 +229,7 @@ void test4(){
     tree_t *t = createTree(values, number);
     int expected[] = {-3,0,1, 15, 20, 21, 22};
 
-    int *ret;
+    int *ret = NULL;
 
     monitored.malloc = true;
     monitored.free = true;
@@ -242,14 +238,13 @@ void test4(){
     ret = in_order(t);
     SANDBOX_END;
 
-    flag = 1;
-
     CU_ASSERT_EQUAL(stats.malloc.called - stats.free.called, 1);    // check if all memory was freed (should only remain the malloc of the return value)
     if (stats.malloc.called - stats.free.called != 1) {
         logErrorMalloc(stats.malloc.called, stats.free.called);
     }
     for (int i = 0; i < t->number_elements; i++)
     {
+        if (!(ret+i)) return fail();
         CU_ASSERT_EQUAL(*(ret+i), expected[i]);
         if (*(ret+i) != expected[i]){
             logError(expected, ret, number);
@@ -258,11 +253,7 @@ void test4(){
     }
 
     freeTree(t);
-    free(ret);
-
-    if (flag){
-        set_tag("q1");
-    }
+    if (ret) free(ret);
     
 }
 
@@ -271,10 +262,10 @@ void test5(){
     set_test_metadata("inorder", _("Test in-order binary tree (random tree)"), 1);
     srand( time( NULL ) );
     
-
-    int values[1000];
-    int expected[1000];
     int number = 1000;
+    int values[number];
+    int expected[number];
+
 
     for (int i = 0; i < number; i++)
     {
@@ -291,7 +282,7 @@ void test5(){
 
     tree_t *t = createTree(values, number);
 
-    int *ret;
+    int *ret = NULL;
 
     monitored.malloc = true;
     monitored.free = true;
@@ -300,37 +291,35 @@ void test5(){
     ret = in_order(t);
     SANDBOX_END;
 
-    flag = 1;
 
     CU_ASSERT_EQUAL(stats.malloc.called - stats.free.called, 1);    // check if all memory was freed (should only remain the malloc of the return value)
     if (stats.malloc.called - stats.free.called != 1) {
         logErrorMalloc(stats.malloc.called, stats.free.called);
+        return;
     }
 
     for (int i = 0; i < t->number_elements; i++)   // check if all elements appeared the right number of times
     {
-        CU_ASSERT(expected[*(ret+i)] > 0);
-        if (expected[*(ret+i)] <= 0){
-            flag = 0;
+        if (!(ret+i)) return fail();
+        if (*(ret+i) >= number || *(ret+i) < 0){
+            return fail();
         }
+        CU_ASSERT(expected[*(ret+i)] > 0);
         expected[*(ret+i)]--;
     }
 
     for (int i = 0; i < t->number_elements - 1; i++)   // check if all elements appeared in the expected order
     {
-        CU_ASSERT(*(ret+i) <= *(ret+i+1));
-        if (*(ret+i) > *(ret+i+1)){
-            flag = 0;
+        if (!(ret+i) || !(ret+i+1)) return fail();
+        if (*(ret+i) >= number || *(ret+i) < 0 || *(ret+i+1) >= number || *(ret+i+1) < 0){
+            return fail();
         }
+        CU_ASSERT(*(ret+i) <= *(ret+i+1));
     }
 
     freeTree(t);
 
-    free(ret);
-
-    if (flag){
-        set_tag("q1");
-    }
+    if (ret) free(ret);
     
 }
 
@@ -348,8 +337,6 @@ void test6(){
 
     failures.malloc = FAIL_ALWAYS;              // make malloc fail
 
-    flag = 1;
-
     int *res = &flag;
     
     SANDBOX_BEGIN;
@@ -359,16 +346,10 @@ void test6(){
     failures.malloc = 0;
 
     CU_ASSERT(res == NULL);
-    if (res!=NULL){
-        flag = 0;
-    }
 
-    free(res);
+    if (res) free(res);
     freeTree(t);
 
-    if(flag){
-        set_tag("q1");
-    }
 }
 
 
@@ -384,8 +365,6 @@ void test7(){
 
     failures.malloc = FAIL_ALWAYS;
 
-
-    flag = 1;
 
     int *ret = &flag;
 
@@ -406,14 +385,13 @@ void test7(){
 
     if (stats.free.called != 0) push_info_msg("How did you even free something ?");
 
-    if (flag){
-        set_tag("q1");
-    }
+
 }
 
 
 int main(int argc,char** argv)
 {
+    signal(SIGSEGV, fail);
     BAN_FUNCS();
     RUN(test1, test2, test3, test4, test5, test6, test7);
 }

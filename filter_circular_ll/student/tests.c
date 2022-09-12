@@ -183,6 +183,7 @@ void test_empty() {
     SANDBOX_END;
 
     CU_ASSERT_PTR_NOT_NULL(got);
+    if (got==NULL) return push_info_msg("You shouldn't return NULL with a NULL list");
     CU_ASSERT_EQUAL(got->size, 0);
     CU_ASSERT_PTR_NULL(got->tail);
     free_list(got);
@@ -203,8 +204,6 @@ void test_single_accepted() {
     SANDBOX_BEGIN;
     got = filter(&init, pred_accept_all);
     SANDBOX_END;
-    
-    error(&expect, got, &init, ACCEPT);
 
     assert_lists_equal(got, &expect);
     if (!flag) error(&expect, got, &init, ACCEPT);
@@ -225,6 +224,7 @@ void test_single_rejected() {
     SANDBOX_END;
 
     CU_ASSERT_PTR_NOT_NULL(got);
+    if (got==NULL) return push_info_msg("You shouldn't return NULL with a NULL list");
     CU_ASSERT_EQUAL(got->size, 0);
     CU_ASSERT_PTR_NULL(got->tail);
     if (got != NULL && got->size != 0){
@@ -307,6 +307,7 @@ void test_five_rejected() {
     got = filter(&init, pred_reject_all);
     SANDBOX_END;
     CU_ASSERT_PTR_NOT_NULL(got);
+    if (got==NULL) return push_info_msg("You shouldn't return NULL with a NULL list");
     CU_ASSERT_EQUAL(got->size, 0);
     CU_ASSERT_PTR_NULL(got->tail);
     if (got != NULL && got->size != 0){
@@ -345,8 +346,56 @@ void test_unchanged_initial_list() {
     free_list(got);
 }
 
+void test_failed_malloc(){
+    set_test_metadata("filter", _("Test failed malloc"), 1);
+
+        flag = 1;
+    list_t init; init.size = 0; init.tail = NULL;
+    if (enqueue(&init, 19) != 0 ||
+        enqueue(&init, 28) != 0 ||
+        enqueue(&init, 17) != 0) 
+        return;
+    
+    list_t *got = &init;
+
+    monitored.malloc = true;
+    failures.malloc = FAIL_ALWAYS;
+
+    SANDBOX_BEGIN;
+    got = filter(&init, pred_accept_even);
+    SANDBOX_END;
+
+    CU_ASSERT_EQUAL(got, NULL);
+    if (got) return push_info_msg("You should return NULL when a malloc fails");
+    if (got && got != &init) free_list(got);
+}
+
+void test_vicious_failed_malloc(){
+    set_test_metadata("filter", _("Test failed malloc with first malloc succeeded"), 1);
+
+    flag = 1;
+    list_t init; init.size = 0; init.tail = NULL;
+    if (enqueue(&init, 10) != 0 ||
+        enqueue(&init, 28) != 0 ||
+        enqueue(&init, 2) != 0) 
+        return;
+    
+    list_t *got = &init;
+
+    monitored.malloc = true;
+    failures.malloc = 0x04;
+
+    SANDBOX_BEGIN;
+    got = filter(&init, pred_accept_even);
+    SANDBOX_END;
+
+    CU_ASSERT_EQUAL(got, NULL);
+    if (got) return push_info_msg("You should return NULL when a malloc fails");
+    if (got && got != &init) free_list(got);
+}
+
 int main(int argc,char** argv)
 {
     BAN_FUNCS();
-    RUN(test_empty, test_null, test_single_accepted, test_single_rejected, test_triple_even_modified_tail, test_triple_even_unchanged_tail, test_five_rejected, test_unchanged_initial_list);
+    RUN(test_empty, test_null, test_single_accepted, test_single_rejected, test_triple_even_modified_tail, test_triple_even_unchanged_tail, test_five_rejected, test_unchanged_initial_list, test_failed_malloc, test_vicious_failed_malloc);
 }

@@ -5,6 +5,8 @@
 queue_t* init_queue(){
 	queue_t *q = malloc(sizeof(queue_t));
 	q->size = 0;
+    q->front = NULL;
+    q->rear = NULL;
 	return q;
 }
 

@@ -80,6 +80,7 @@ void test_filter2(){
 	set_test_metadata("filter", "Test filter with list->first==NULL", 1);
 	list_t* list2 = malloc(sizeof(list_t));
 	list2->first = NULL;
+	list2->size = 0;
 	SANDBOX_BEGIN;
 	filter(list2, filter_function);
 	SANDBOX_END;
@@ -262,6 +263,7 @@ void test_map2(){
 	list_t* list2 = malloc(sizeof(list_t));
 
 	list2->first = NULL;
+	list2->size = 0;
 
 	SANDBOX_BEGIN;
 	map(list2, map_function);

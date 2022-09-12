@@ -4,10 +4,10 @@
 #include "student_code.h"
 
 
-int findMinIndex(node_l* LLhead){
+int findMinIndex(node_l* head){
 	@@find@@
 }
 
-int removeTheMinIndex(node_l ** LLhead, int MinIndex){
+int removeTheMinIndex(node_l ** head, int MinIndex){
 	@@remove@@
 }

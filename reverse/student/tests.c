@@ -154,8 +154,65 @@ void test4(){
     
 }
 
+void test5(){
+    set_test_metadata("reverse", "Test for a NULL list", 1);
+
+    node_t *head = NULL;
+
+    node_t *ret = NULL;
+    SANDBOX_BEGIN;
+    ret = reverse(head);
+    SANDBOX_END;
+
+    CU_ASSERT_EQUAL(ret, NULL);
+    if (ret != NULL) push_info_msg("You should return NULL when passed a NULL list");
+}
+
+void test6(){
+
+    set_test_metadata("reverse", "Test with failed malloc", 1);
+
+    node_t e1={1,NULL};
+    node_t heade={-10,&e1};
+
+    node_t* ans = &heade;
+
+    monitored.malloc = true;
+    failures.malloc = FAIL_ALWAYS;
+
+    SANDBOX_BEGIN;
+    ans=reverse(&heade);
+    SANDBOX_END;
+
+    CU_ASSERT_EQUAL(ans, NULL);
+    if(ans != NULL) push_info_msg("You should return NULL when a malloc fails");
+
+}
+
+
+void test7(){
+
+    set_test_metadata("reverse", "Test random malloc fails", 1);
+
+    node_t e1={1,NULL};
+    node_t heade={-10,&e1};
+
+    node_t* ans = &heade;
+
+    monitored.malloc = true;
+    failures.malloc = 0x02;
+
+    SANDBOX_BEGIN;
+    ans=reverse(&heade);
+    SANDBOX_END;
+
+    CU_ASSERT_EQUAL(ans, NULL);
+    if(ans != NULL) push_info_msg("You should return NULL when a malloc fails");
+
+}
+
 int main(int argc,char** argv)
 {
     BAN_FUNCS();
-    RUN(test1, test2, test3, test4);
+    RUN(test1, test2, test3, test4, test5, test6, test7);
 }

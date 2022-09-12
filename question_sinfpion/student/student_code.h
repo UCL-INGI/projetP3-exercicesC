@@ -3,6 +3,6 @@ typedef struct Node {
   struct Node* next;
 } node_l;
 
-int findMinIndex(node_l* LLhead);
+int findMinIndex(node_l* head);
 
-int removeTheMinIndex(node_l ** LLhead, int MinIndex);
+int removeTheMinIndex(node_l ** head, int MinIndex);

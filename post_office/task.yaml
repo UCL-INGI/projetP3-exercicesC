@@ -89,7 +89,7 @@ problems:
                      * @letter  : the letter to enqueue
                      * @q      : the queue
                      *
-                     * @return 0 if no error, -1 otherwise
+                     * @return 0 if no error, -1 if letter is NULL
                      *
                      * pre : the queue q will always be valid, you don't have to handle the NULL case
                      */
@@ -108,7 +108,7 @@ problems:
                      * @post_office_queue : the queue from which you have to dequeue
                      * @continents_queue  : the array of continents queues
                      *
-                     * @return 0 if no error, -1 otherwise
+                     * @return 0 if no error, -1 if the post_office_queue is empty or if an error occurred
                      *
                      * pre : the queues will always be valid, you don't have to handle the NULL case
                      */

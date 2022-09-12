@@ -352,8 +352,23 @@ void test8(){
     free((void*) LinkedList);
 }
 
+void test9(){
+    set_test_metadata("find", "Test head==NULL", 1);
+
+    node_l *head = NULL;
+
+    int min = 0;
+
+    SANDBOX_BEGIN;
+    min = findMinIndex(head);
+    SANDBOX_END;
+
+    CU_ASSERT_EQUAL(min, -1);
+    if (min != -1) push_info_msg("You should return -1 when head is NULL");
+}
+
 int main(int argc,char** argv)
 {
     BAN_FUNCS();
-    RUN(test1, test2, test3, test4, test5, test6, test7, test8);
+    RUN(test1, test2, test3, test4, test5, test6, test7, test8, test9);
 }

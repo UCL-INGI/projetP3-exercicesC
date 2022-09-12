@@ -1,0 +1,117 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 2
+    cc_q2: 1
+    nlines_q1: 7
+    nlines_q2: 3
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-09 10:32:32.404116'
+    '@username': test
+    auxiliary: |-
+        node_t* reverseHelp(node_t* head, node_t *acc){
+            if (!head) return acc;
+            node_t *new = malloc(sizeof(node_t));
+            new->val = head->val;
+            new->next = acc;
+            return reverseHelp(head->next, new);
+        }
+    reverse: return reverseHelp(head, NULL);
+problems:
+    reverse:
+    - failed
+    - |+
+        * Test minimum de [-1,1,5,10]
+          => réussi (1/1) pts
+        * Test minimum de [-10, 1, 5]
+          => réussi (1/1) pts
+        * Test on more elements
+          => réussi (1/1) pts
+        * Test for NULL as last next
+          => réussi (1/1) pts
+        * Test for a NULL list
+          => réussi (1/1) pts
+        * Test with failed malloc
+          => échoué (0/1) pts
+          Info: Your code produced a segfault. — You should return NULL when a malloc fails
+        * Test random malloc fails
+          => échoué (0/1) pts
+          Info: Your code produced a segfault. — You should return NULL when a malloc fails
+response_type: rst
+result: success
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      1      0        0
+                 asserts      9      9      9      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts      7      7      7      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      1      0        0
+                 asserts     15     15     15      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      1      0        0
+                 asserts      5      5      5      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test6 had failures:
+        1. CTester.c:171  - CU_FAIL("Segfault or timeout")
+        2. tests.c:187  - CU_ASSERT_EQUAL(ans,NULL)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      0      1        0
+                 asserts      2      2      0      2      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test7 had failures:
+        1. CTester.c:171  - CU_FAIL("Segfault or timeout")
+        2. tests.c:209  - CU_ASSERT_EQUAL(ans,NULL)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      0      1        0
+                 asserts      2      2      0      2      n/a
+    Elapsed time =    0.000 seconds
+taskid: reverse
+tests:
+    sigsegv: true
+text: |-
+    - Votre code compile.
+    - Il y a des erreurs dans votre solution.

@@ -1,3 +1,6 @@
+#ifndef HELP_H
+#define HELP_H
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -79,3 +82,4 @@ queue_t* init_queue();
 * Helper function
 */
 
+#endif

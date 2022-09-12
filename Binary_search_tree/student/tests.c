@@ -184,7 +184,7 @@ void testAddVariableInit() {
 
     int ret = destroyTree(root);
     CU_ASSERT_EQUAL(ret, 3);
-    if (ret != 500){
+    if (ret != 3){
         push_info_msg("Some nodes disappeared in the process ...?");
     }
 }
@@ -216,7 +216,7 @@ void testAddSameValue() {
 
     int ret = destroyTree(root);
     CU_ASSERT_EQUAL(ret, 1)
-    if (ret != 500){
+    if (ret != 1){
         push_info_msg("Some nodes disappeared in the process ...?");
     }
 }
@@ -341,7 +341,15 @@ void testSearch1() {
     SANDBOX_BEGIN;
     ret = search(root, 2);
     SANDBOX_END;
-    CU_ASSERT_EQUAL(search(root, 6), 1);
+
+    CU_ASSERT_EQUAL(ret, 0);
+    if (ret != 0) return push_info_msg("The search function found an imaginary node ...? ");
+
+    SANDBOX_BEGIN;
+    ret = search(root, 6);
+    SANDBOX_END;
+
+    CU_ASSERT_EQUAL(ret, 1);
     if (ret != 1) return push_info_msg("The search function didn't find an existing node");
     root = addCorrect(root, 5);
     root = addCorrect(root, 3);
@@ -373,7 +381,7 @@ void testSearch1() {
 
     ret = destroyTree(root);
     CU_ASSERT_EQUAL(ret, 5)
-    if (ret != 500){
+    if (ret != 5){
         push_info_msg("Some nodes disappeared in the process ...?");
     }
 }
@@ -748,5 +756,5 @@ void testBigSearch() {
 int main(int argc,char** argv)
 {
     BAN_FUNCS();
-    RUN(testAdd1, testAddSameValue, testAddVariableInit, testBigAdd, testBigSearch, testSearch1, testSearchEfficiency);
+    RUN(testAdd1, testAddSameValue, testAddVariableInit, testBigAdd, testSearch1, testBigSearch,  testSearchEfficiency);
 }

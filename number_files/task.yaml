@@ -25,6 +25,12 @@ context: |
                 int n_files;    // le nombre de fichier (standards et répertoires) contenus dans le fichier, SI celui-ci est un répertoire
                 void * content; // modélise le contenu du fichier (non-utilisé dans cet exercice)
             } file_t;
+
+    Exemples d'utilisation:
+
+        - Pour le dossier Documents, contenant : a, b et c (3 fichiers standards) : get_number_of_files(Documents) retourne 3
+
+        - Pour le dossier Home, contenant le dossier Documents (précédemment décrit), et le dossier Downloads qui lui contient : d (fichier standard) et y (Dossier). y contient uniquement e (fichier standard). get_number_of_files(Home) retourne 5
 environment_id: cpp
 environment_parameters:
     limits:
@@ -47,8 +53,9 @@ problems:
                 .. code-block:: c
 
                     /*
-                     *@pre file est un répertoire
+                     *@pre file est un répertoire, possiblement NULL
                      *@post retourne le nombre de fichiers contenus dans 'file'
+                     *               -1 si file== NULL
                      */
                     int get_number_of_files (file_t * file){
         language: ''

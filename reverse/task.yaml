@@ -36,12 +36,21 @@ problems:
 
                 /*
                 * Reverses linked list
-                * @return     : the head of the list reversed
                 *
                 * pre         : head will not be null
+                *
+                * @return     : the head of the list reversed
+                *               NULL if a malloc fails
                 */
                 node_t* reverse(node_t* head){
         language: c
+        default: ''
+    auxiliary:
+        type: code
+        name: Auxiliary functions
+        header: Write here your auxiliary functions
+        language: c
+        optional: 'on'
         default: ''
 stored_submissions: 0
 submission_limit:

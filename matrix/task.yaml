@@ -62,7 +62,7 @@ problems:
                      *@post retourne la matrice de taille n*m correspondant à la linked list lst
                      *      retourne NULL si malloc échoue
                      */
-                    int** linked_list_to_matrix(list_t *, int, int);
+                    int** linked_list_to_matrix(list_t *lst, int n, int m);
         language: c
         default: ''
 stored_submissions: 0

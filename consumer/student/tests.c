@@ -3,7 +3,10 @@
 #include "student_code.h"
 #include "../../course/common/student/CTester/CTester.h"
 
+int flag = 1;
+
 void error(int ret, int exp){
+    flag = 0;
     char *template = "You returned the wrong value. For information, your fonction returned %d, while it should return %d";
     char msg[strlen(template)];
     sprintf(msg, template, ret, exp);
@@ -24,16 +27,22 @@ void test1_add(){
     int ret1 = 42;
     int ret2 = 42;
     int ret3 = 42;
+    
+    flag = 1;
 
     SANDBOX_BEGIN;
     ret1 = AddStuff(client, "teddy bear", 10);
     ret2 = AddStuff(client, "candy", 0);
     ret3 = AddStuff(client, "TV", 200);
     SANDBOX_END;
+    
+    flag = 1;
 
     check_ret(ret1, 0);
     check_ret(ret2, 0);
     check_ret(ret3, 0);
+    
+    if (!flag) return;
 
     char* listName[] = {"teddy bear","candy", "TV"};
     CU_ASSERT_EQUAL(client->total, 210);
@@ -62,6 +71,8 @@ void test2_add(){
     int ret4 = 42;
     int ret5 = 42;
     int ret6 = 42;
+    
+    flag = 1;
 
     SANDBOX_BEGIN;
     ret1 = AddStuff(client, "teddy bear", 10);
@@ -78,6 +89,8 @@ void test2_add(){
     check_ret(ret4, 0);
     check_ret(ret5, 0);
     check_ret(ret6, -3);
+    
+    if (!flag) return;
 
     char* listName[] = {"poney", "candy", "TV"};
     CU_ASSERT_EQUAL(client->total, 2202);
@@ -103,6 +116,8 @@ void test3_add(){
     int ret1 = 42;
     int ret2 = 42;
     int ret3 = 42;
+    
+    flag = 1;
 
     SANDBOX_BEGIN;
     ret1 = AddStuff(client, "car", 30000);
@@ -113,6 +128,8 @@ void test3_add(){
     check_ret(ret1, -2);
     check_ret(ret2, 0);
     check_ret(ret3, -2);
+    
+    if (!flag) return;
 
     char* listName[] = {"Laptop"};
     CU_ASSERT_EQUAL(client->total, 1200);
@@ -138,6 +155,8 @@ void test4_add(){
     int ret2 = 42;
     int ret3 = 42;
     int ret4 = 42;
+    
+    flag = 1;
 
     SANDBOX_BEGIN;
     ret1 = AddStuff(client, "TV", 500);
@@ -150,6 +169,8 @@ void test4_add(){
     check_ret(ret2, 0);
     check_ret(ret3, 0);
     check_ret(ret4, -2);
+    
+    if (!flag) return;
 
     char* listName[] = {"TV", "Laptop", "Gaz"};
     CU_ASSERT_EQUAL(client->total, 4700);
@@ -178,6 +199,8 @@ void test5_add(){
         ret[i] = 42;
     }
     
+    flag = 1;
+    
     SANDBOX_BEGIN;
     ret[0] = AddStuff(client, "Teddy bear", 10);
     ret[1] = AddStuff(client, "Candy", 2);
@@ -197,6 +220,8 @@ void test5_add(){
         check_ret(ret[i], 0);
     }
     check_ret(ret[10], -5);
+    
+    if (!flag) return;
     
 
     CU_ASSERT_EQUAL(client->total, 287);
@@ -222,12 +247,16 @@ void test6_add(){
     consumer_t * client = NewConsumer("Maximus", 10, 5000, dontLike, 2);
 
     int ret = 42;
+    
+    flag = 1;
 
     SANDBOX_BEGIN;
     ret = AddStuff(client, NULL, 15);
     SANDBOX_END;
 
     check_ret(ret, -1);
+    
+    if (!flag) return;
 
     free(client);
 }
@@ -238,12 +267,16 @@ void test7_add(){
     char *name = "Switch";
 
     int ret = 42;
+    
+    flag = 1;
 
     SANDBOX_BEGIN;
     ret = AddStuff(NULL, name, 289);
     SANDBOX_END;
 
     check_ret(ret, -1);
+    
+    if (!flag) return;
 }
 
 void test8_add(){
@@ -257,12 +290,16 @@ void test8_add(){
 
     monitored.malloc = true;
     failures.malloc = FAIL_ALWAYS;
+    
+    flag = 1;
 
     SANDBOX_BEGIN;
     ret = AddStuff(client, name, 289);
     SANDBOX_END;
 
     check_ret(ret, -4);
+    
+    if (!flag) return;
 
     free(client);
 }

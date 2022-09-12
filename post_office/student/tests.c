@@ -4,7 +4,18 @@
 #include <CUnit/Basic.h>
 #include <CUnit/CUnit.h>
 #include "student_code.h"
+#include "solutions/student_code_sol.h"
 #include "../../course/common/student/CTester/CTester.h"
+
+
+letter_t *init_letter(int continent, int priority, char name){
+	letter_t *ret = malloc(sizeof(letter_t));
+	ret->next = NULL;
+	ret->name = name;
+	ret->priority = priority;
+	ret->continent = continent;
+	return ret;
+}
 
 char *str_letter(letter_t *letter){
     if (letter == NULL){
@@ -24,6 +35,9 @@ char *str_queue(queue_t *queue){
     strcat(res, "[");
     letter_t *curr = queue->front;
     for (int i = 0; i< queue->size; i++){
+		if (!curr){
+			break;
+		}
         char *temp = str_letter(curr);
         strcat(res, temp);
         if (i < queue->size - 1) strcat(res, ", ");
@@ -236,11 +250,7 @@ void test_dequeue_7(){
 void test_enqueue_1(){
     set_test_metadata("priority_enqueue", _("Update of queue size when enqueuing to an empty queue"), 1);
 	queue_t *q = init_queue();
-	letter_t *elem = malloc(sizeof(letter_t));
-	elem->continent = 0;
-	elem->name = 'A';
-	elem->next = NULL;
-	elem->priority = 0;
+	letter_t *elem = init_letter(0, 0, 'A');
     SANDBOX_BEGIN;
 	priority_enqueue(q,elem);
     SANDBOX_END;
@@ -255,11 +265,7 @@ void test_enqueue_1(){
 void test_enqueue_2(){
     set_test_metadata("priority_enqueue", _("Redefinition of front and rear after enqueuing a letter to an empty queue"), 1);
 	queue_t *q = init_queue();
-	letter_t *elem = malloc(sizeof(letter_t));
-	elem->continent = 0;
-	elem->name = 'A';
-	elem->next = NULL;
-	elem->priority = 0;
+	letter_t *elem = init_letter(0, 0, 'A');
     SANDBOX_BEGIN;
 	priority_enqueue(q,elem);
     SANDBOX_END;
@@ -275,18 +281,11 @@ void test_enqueue_2(){
 void test_enqueue_3(){
     set_test_metadata("priority_enqueue", _("Update of queue size when enqueuing to a queue with 1 element"), 1);
 	queue_t *q = init_queue();
-	letter_t *in_queue = malloc(sizeof(letter_t));
-	letter_t *elem = malloc(sizeof(letter_t));
-	in_queue->continent = 0;
-	in_queue->name = 'A';
-	in_queue->priority = 0;
-	elem->continent = 0;
-	elem->name = 'B';
-	elem->priority = 0;
+	letter_t *in_queue = init_letter(0, 0, 'A');
+	letter_t *elem = init_letter(0, 0, 'B');
 	q->front = in_queue;
 	q->rear = in_queue;
 	q->size = 1;
-
     char *queue_str = str_queue(q);
     SANDBOX_BEGIN;
 	priority_enqueue(q,elem);
@@ -306,14 +305,8 @@ void test_enqueue_3(){
 void test_enqueue_4(){
     set_test_metadata("priority_enqueue", _("Redefinition of front and rear when enqueuing a letter without priority in a queue that has a letter without priority"), 1);
 	queue_t *q = init_queue();
-	letter_t *in_queue = malloc(sizeof(letter_t));
-	letter_t *elem = malloc(sizeof(letter_t));
-	in_queue->continent = 0;
-	in_queue->name = 'A';
-	in_queue->priority = 0;
-	elem->continent = 0;
-	elem->name = 'B';
-	elem->priority = 0;
+	letter_t *in_queue = init_letter(0, 0, 'A');
+	letter_t *elem = init_letter(0, 0, 'B');
 	q->front = in_queue;
 	q->rear = in_queue;
 	q->size = 1;
@@ -323,7 +316,17 @@ void test_enqueue_4(){
     SANDBOX_END;
 	char expected_front = 'A';
 	char expected_rear = 'B';
+	if (!q->front){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_front,q->front->name);
+	if (!q->rear){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_rear,q->rear->name);
     if (expected_front != q->front->name || expected_rear != q->rear->name) error_queue(queue_str, q, elem);
 	free(q); free(queue_str);
@@ -337,14 +340,9 @@ void test_enqueue_4(){
 void test_enqueue_5(){
     set_test_metadata("priority_enqueue", _("Redefinition of front and rear when enqueuing a letter with priority in a queue that has a letter without priority"), 1);
 	queue_t *q = init_queue();
-	letter_t *in_queue = malloc(sizeof(letter_t));
-	letter_t *elem = malloc(sizeof(letter_t));
-	in_queue->continent = 0;
-	in_queue->name = 'A';
-	in_queue->priority = 0;
-	elem->continent = 0;
-	elem->name = 'B';
-	elem->priority = 1;
+	letter_t *in_queue = init_letter(0, 0, 'A');
+	letter_t *elem = init_letter(0, 1, 'B');
+
 	q->front = in_queue;
 	q->rear = in_queue;
 	q->size = 1;
@@ -354,7 +352,17 @@ void test_enqueue_5(){
     SANDBOX_END;
 	char expected_front = 'B';
 	char expected_rear = 'A';
+	if (!q->front){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_front,q->front->name);
+	if (!q->rear){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_rear,q->rear->name);
     if (expected_front != q->front->name || expected_rear != q->rear->name ) error_queue(queue_str, q, elem);
 	free(q); free(queue_str);
@@ -368,11 +376,8 @@ void test_enqueue_5(){
 void test_enqueue_6(){
     set_test_metadata("priority_enqueue", _("Redefinition of front and rear when enqueuing a letter without priority in a queue that has a letter with priority"), 1);
 	queue_t *q = init_queue();
-	letter_t *in_queue = malloc(sizeof(letter_t));
-	letter_t *elem = malloc(sizeof(letter_t));
-	in_queue->continent = 0;
-	in_queue->name = 'A';
-	in_queue->priority = 1;
+	letter_t *in_queue = init_letter(0, 1, 'A');
+	letter_t *elem = init_letter(0,0,'B');
 	elem->continent = 0;
 	elem->name = 'B';
 	elem->priority = 0;
@@ -385,7 +390,17 @@ void test_enqueue_6(){
     SANDBOX_END;
 	char expected_front = 'A';
 	char expected_rear = 'B';
+	if (!q->front){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_front,q->front->name);
+	if (!q->rear){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_rear,q->rear->name);
     if(expected_front != q->front->name || expected_rear != q->rear->name) error_queue(queue_str, q, elem);
 	free(q); free(queue_str);
@@ -399,14 +414,8 @@ void test_enqueue_6(){
 void test_enqueue_7(){
     set_test_metadata("priority_enqueue", _("Redefinition of front and rear when enqueuing a letter with priority in a queue that has a letter with priority"), 1);
 	queue_t *q = init_queue();
-	letter_t *in_queue = malloc(sizeof(letter_t));
-	letter_t *elem = malloc(sizeof(letter_t));
-	in_queue->continent = 0;
-	in_queue->name = 'A';
-	in_queue->priority = 1;
-	elem->continent = 0;
-	elem->name = 'B';
-	elem->priority = 1;
+	letter_t *in_queue = init_letter(0,1, 'A');
+	letter_t *elem = init_letter(0, 1, 'B');
 	q->front = in_queue;
 	q->rear = in_queue;
 	q->size = 1;
@@ -416,7 +425,19 @@ void test_enqueue_7(){
     SANDBOX_END;
 	char expected_front = 'A';
 	char expected_rear = 'B';
+	if (!q->front){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
+	if (!q->front) CU_FAIL();
 	CU_ASSERT_EQUAL(expected_front,q->front->name);
+	if (!q->rear) CU_FAIL();
+	if (!q->rear){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_rear,q->rear->name);
     if (expected_front != q->front->name || expected_rear != q->rear->name)error_queue(queue_str, q, elem);
 	free(q); free(queue_str);
@@ -430,18 +451,10 @@ void test_enqueue_7(){
 void test_enqueue_8(){
     set_test_metadata("priority_enqueue", _("Redefinition of front and rear when enqueuing a letter withouth priority in a queue with 2 letters. The first has priority, the second doesn't"), 1);
 	queue_t *q = init_queue();
-	letter_t *front = malloc(sizeof(letter_t));
-	letter_t *rear = malloc(sizeof(letter_t));
-	letter_t *elem = malloc(sizeof(letter_t));
-	front->continent = 0;
-	front->name = 'A';
-	front->priority = 1;
-	rear->continent = 0;
-	rear->name = 'B';
-	rear->priority = 0;
-	elem->continent = 0;
-	elem->name = 'C';
-	elem->priority = 0;
+	letter_t *front = init_letter(0, 1, 'A');
+	letter_t *rear = init_letter(0, 0, 'B');
+	letter_t *elem = init_letter(0, 0, 'C');
+
 	front->next = rear;
 	q->front = front;
 	q->rear = rear;
@@ -452,7 +465,17 @@ void test_enqueue_8(){
     SANDBOX_END;
 	char expected_front = 'A';
 	char expected_rear = 'C';
+	if (!q->front){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_front,q->front->name);
+	if (!q->rear){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_rear,q->rear->name);
     if (expected_front != q->front->name || expected_rear != q->rear->name)error_queue(queue_str, q, elem);
 	free(q); free(queue_str);
@@ -466,18 +489,10 @@ void test_enqueue_8(){
 void test_enqueue_9(){
     set_test_metadata("priority_enqueue", _("Redefinition of front and rear when enqueuing a letter with priority in a queue with 2 letters. The first has priority, the second doesn't"), 1);
 	queue_t *q = init_queue();
-	letter_t *front = malloc(sizeof(letter_t));
-	letter_t *rear = malloc(sizeof(letter_t));
-	letter_t *elem = malloc(sizeof(letter_t));
-	front->continent = 0;
-	front->name = 'A';
-	front->priority = 1;
-	rear->continent = 0;
-	rear->name = 'B';
-	rear->priority = 0;
-	elem->continent = 0;
-	elem->name = 'C';
-	elem->priority = 1;
+	letter_t *front = init_letter(0, 1, 'A');
+	letter_t *rear = init_letter(0, 0, 'B');
+	letter_t *elem = init_letter(0, 1, 'C');
+
 	front->next = rear;
 	q->front = front;
 	q->rear = rear;
@@ -488,7 +503,17 @@ void test_enqueue_9(){
     SANDBOX_END;
 	char expected_front = 'A';
 	char expected_rear = 'B';
+	if (!q->front){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_front,q->front->name);
+	if (!q->rear){
+		error_queue(queue_str, q, elem);
+		CU_FAIL();
+		return;
+	}
 	CU_ASSERT_EQUAL(expected_rear,q->rear->name);
     if (expected_front != q->front->name || expected_rear != q->rear->name)error_queue(queue_str, q, elem);
 	free(q); free(queue_str);
@@ -519,10 +544,7 @@ void test_process_letters_1(){
 	for(int i = 0; i < 5; i++) {
 		continent_queues[i] = init_queue();
 	}
-	letter_t *elem = malloc(sizeof(letter_t));
-	elem->continent = 2;
-	elem->name = 'A';
-	elem->priority = 0;
+	letter_t *elem = init_letter(2, 0, 'A');
 	post_office_q->front = elem;
 	post_office_q->rear = elem;
 	post_office_q->size = 1;
@@ -575,13 +597,13 @@ void test_process_letters_3(){
 		(letters_list[i]).continent = continents_list[i];
 		(letters_list[i]).priority = priority_list[i];
 		(letters_list[i]).name = names[i];
+		(letters_list[i]).next = NULL;
 	} 
 
 	queue_t *post_queue = malloc(sizeof(queue_t));
 	queue_t **continent_queues = malloc(sizeof(queue_t*)*5);
 	for(int i = 0; i < 5; i++) {
-		continent_queues[i] = malloc(sizeof(queue_t));
-		continent_queues[i]->size = 0;
+		continent_queues[i] = init_queue();
 	}
 
 	post_queue->front = &letters_list[0];
@@ -616,36 +638,73 @@ void test_process_letters_3(){
 	char **res = malloc(sizeof(char*)*5);
 	res[0] = res_Europe; res[1] = res_America; res[2] = res_Asia; res[3] = res_Oceania; res[4] = res_Africa;
 
+
 	for(int i = 0; i < 5; i++) {
 		int k = 0;
 		while((continent_queues[i]->size > 0) && (k<5)){
-            SANDBOX_BEGIN;
-			res[i][k] = dequeue(continent_queues[i])->name;
-            SANDBOX_END;
+			letter_t *temp = dequeue_sol(continent_queues[i]);
+			res[i][k] = temp->name;
 			k++;
 		}
 	}
 
+	int flags[5];
+
 	for(int i = 0; i < 4; i++){
 		CU_ASSERT_EQUAL(expected_res_Europe[i],res_Europe[i]);
-        if (expected_res_Europe[i] != res_Europe[i]) flag = 0;
+        if (expected_res_Europe[i] != res_Europe[i]){
+			flag = 0;
+			flags[0] = 1;
+		} 
 	}
 	CU_ASSERT_EQUAL(expected_res_America[0],res_America[0]);
 	for(int i = 0; i < 2; i++){
 		CU_ASSERT_EQUAL(expected_res_Asia[i],res_Asia[i]);
-        if (expected_res_Asia[i] != res_Asia[i]) flag = 0;
+        if (expected_res_Asia[i] != res_Asia[i]){
+			flag = 0;
+			flags[1] = 1;
+		} 
 	}
 	for(int i = 0; i < 3; i++){
 		CU_ASSERT_EQUAL(expected_res_Oceania[i],res_Oceania[i]);
-        if (expected_res_Oceania[i] != res_Oceania[i]) flag = 0;
+        if (expected_res_Oceania[i] != res_Oceania[i]){
+			flag = 0;
+			flags[2] = 1;
+		} 
 	}
 	for(int i = 0; i < 4; i++){
 		CU_ASSERT_EQUAL(expected_res_Africa[i],res_Africa[i]);
-        if (expected_res_Africa[i] != res_Africa[i]) flag = 0;
+        if (expected_res_Africa[i] != res_Africa[i]){
+			flag = 0;
+			flags[3] = 1;
+		} 
 	}
 
+	for(int i = 0; i < 2; i++){
+		CU_ASSERT_EQUAL(expected_res_Asia[i],res_Asia[i]);
+        if (expected_res_Asia[i] != res_Asia[i]){
+			flag = 0;
+			flags[4] = 1;
+		} 
+	}
+
+	char *repr[] = {"Europe", "America", "Oceania", "Africa", "Asia"};
+
     if (!flag){
-        push_info_msg("You did some errors in the queue");
+		char *template = _("You did some errors in the queue(s) : %s");
+		char *temp = malloc(100);
+		strcpy(temp, "[");
+		for (size_t i = 0; i < 5; i++)
+		{
+			if (flags[i]){
+				strcat(temp, repr[i]);
+				strcat(temp, " ");
+			}
+		}
+		strcat(temp, "]");
+		char msg[strlen(template)+100];
+		sprintf(msg, template, temp);
+        push_info_msg(msg);
     }
 
 	free(res_Africa); free(res_Oceania); free(res_Asia), free(res_America); free(res_Europe);

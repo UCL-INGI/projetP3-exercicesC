@@ -64,6 +64,13 @@ problems:
                 int *in_order(tree_t *tree){
         language: c
         default: ''
+    auxiliary:
+        type: code
+        name: Méthodes auxiliaires
+        header: Ecrivez ici vos méthodes auxiliaires
+        language: c
+        optional: 'on'
+        default: ''
 stored_submissions: 0
 submission_limit:
     amount: -1
