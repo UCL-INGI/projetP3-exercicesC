@@ -1,0 +1,146 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 1
+    nlines_q1: 3
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-12 10:16:04.177072'
+    '@username': test
+    filter: return NULL;
+problems:
+    filter:
+    - failed
+    - |+
+        * Test liste vide
+          => échoué (0/1) pts
+          Info: You shouldn't return NULL with a NULL list
+        * Test liste NULL
+          => réussi (1/1) pts
+        * Test node unique acceptée
+          => échoué (0/1) pts
+          Info: Your list should be NULL
+        * Test node unique rejetée
+          => échoué (0/1) pts
+          Info: You shouldn't return NULL with a NULL list
+        * Test tail modifée
+          => échoué (0/1) pts
+          Info: Your list should be NULL
+        * Test tail inchangée
+          => échoué (0/1) pts
+          Info: Your list should be NULL
+        * Test longue liste rejetée
+          => échoué (0/1) pts
+          Info: You shouldn't return NULL with a NULL list
+        * Test liste initiale inchangée
+          => réussi (1/1) pts
+        * Test failed malloc
+          => réussi (1/1) pts
+        * Test failed malloc with first malloc succeeded
+          => réussi (1/1) pts
+response_type: rst
+result: failed
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test_empty : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test_empty had failures:
+        1. tests.c:185  - CU_ASSERT_PTR_NOT_NULL(got)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_null : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_single_accepted : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test_single_accepted had failures:
+        1. tests.c:69  - CU_ASSERT_PTR_EQUAL(actual,expected)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_single_rejected : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test_single_rejected had failures:
+        1. tests.c:226  - CU_ASSERT_PTR_NOT_NULL(got)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_triple_even_modified_tail : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test_triple_even_modified_tail had failures:
+        1. tests.c:69  - CU_ASSERT_PTR_EQUAL(actual,expected)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_triple_even_unchanged_tail : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test_triple_even_unchanged_tail had failures:
+        1. tests.c:69  - CU_ASSERT_PTR_EQUAL(actual,expected)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_five_rejected : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test_five_rejected had failures:
+        1. tests.c:309  - CU_ASSERT_PTR_NOT_NULL(got)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_unchanged_initial_list : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      8      1      1      0        0
+                 asserts      4      4      4      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_failed_malloc : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      9      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_vicious_failed_malloc : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     10      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+taskid: filter_circular_ll
+tests: {}
+text: |-
+    - Votre code compile.
+    - Il y a des erreurs dans votre solution.

@@ -3,7 +3,7 @@ author: Dorian Schrobiltgen Anthony Doeraene
 categories: []
 contact_url: ''
 context: |-
-    .. role::c(code)
+    .. role:: c(code)
         :language: c
 
     Cet exercice est basé sur l'implémentation d'un arbre binaire de recherche qui contient tous les étudiants de l'EPL. Cet arbre est ordonné suivant les noma des étudiants (l'étudiant ayant le plus petit noma se trouve donc le plus à gauche dans l'arbre). Pour chacun des étudiants, l'arbre contient en plus du noma, une donnée (le nom de l'étudiant), et la note obtenue au cours LEPL1503.
@@ -39,7 +39,7 @@ context: |-
             };
 
     Dans un premier temps, il vous est demandé d'écrire une fonction baptisée :c:`insert` qui, prenant comme argument un arbre, un noma,
-    un nom :c:`name` et une note :c:`grade`, ajoute l'étudiant(avec les données :c:`name`, :c:`noma` et :c:`grade`) dans l'arbre binaire en respectant l'ordre de ce dernier.
+    un nom :c:`name` et une note :c:`grade`, ajoute l'étudiant (avec les données :c:`name`, :c:`noma` et :c:`grade`) dans l'arbre binaire en respectant l'ordre de ce dernier. Attention à copier le nom dans une nouvelle adresse mémoire (en appelant un malloc et en copiant la chaîne de caractères dans celle-ci)
     Dans le cas où l'étudiant ajouté possède un noma qui se trouve déjà dans l'arbre, il faut mettre à jour les données relatives à ce-dernier (c'est-à-
     dire modifier le nom **et** la note pour le noma correspondant).
     Dans le cas où une erreur apparait, retournez :c:`NULL`.
@@ -74,7 +74,7 @@ problems:
                      *@pre name != NULL, tree != NULL
                      *@post retourne l'arbre binaire tree auquel a été ajouté l'étudiant dont les informations concernant celui-ci ont été passé en paramètre.
                      */
-                    struct obtree* insert(struct obtree *tree, int noma, char* name, double grade) {
+                    tree_t* insert(tree_t *tree, int noma, char* name, double grade) {
         language: c
         default: ''
     convert:
@@ -88,7 +88,7 @@ problems:
                     *@post retourne la liste chainée n contenant tous les éléments présent dans l'arbre passé en argument, dont les étudiants sont triés par
                     ordre croissant suivant leur noma
                     */
-                    void convert(struct element * head, struct linked_list * n)
+                    list_t *convert(elem_t * head)
         language: c
         default: ''
     auxiliary:

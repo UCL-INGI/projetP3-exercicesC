@@ -8,7 +8,7 @@ LDFLAGS=-lcunit -lm -lpthread -ldl -rdynamic
 SRC=$(wildcard *.c) solutions/student_code_sol.c
 OBJ=$(SRC:.c=.o) 
 OBJ2 = $(OBJ) $(CTEST)/wrap_mutex.o $(CTEST)/wrap_malloc.o $(CTEST)/wrap_file.o $(CTEST)/wrap_sleep.o $(CTEST)/wrap_thread.o $(CTEST)/CTester.o $(CTEST)/trap.o
-CFLAGS=-Wall -Werror -DC99 -std=gnu99 -I$(CTEST)
+CFLAGS=-Wall -Werror -D_GNU_SOURCE -DC99 -std=gnu99 -I$(CTEST)
 WRAP=-Wl,-wrap=pthread_create -Wl,-wrap=pthread_join -Wl,-wrap=pthread_mutex_lock -Wl,-wrap=pthread_mutex_unlock -Wl,-wrap=pthread_mutex_trylock -Wl,-wrap=pthread_mutex_init -Wl,-wrap=pthread_mutex_destroy -Wl,-wrap=malloc -Wl,-wrap=free -Wl,-wrap=realloc -Wl,-wrap=calloc -Wl,-wrap=open -Wl,-wrap=creat -Wl,-wrap=close -Wl,-wrap=read -Wl,-wrap=write -Wl,-wrap=stat -Wl,-wrap=fstat -Wl,-wrap=lseek -Wl,-wrap=exit -Wl,-wrap=sleep -Wl,-wrap=mmap -Wl,-wrap=munmap -Wl,-wrap=msync -Wl,-wrap=ftruncate -Wl,-wrap=memcpy
 
 all: $(EXEC)

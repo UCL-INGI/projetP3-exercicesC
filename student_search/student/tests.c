@@ -4,7 +4,54 @@
 #include <CUnit/Basic.h>
 #include <CUnit/CUnit.h>
 #include "student_code.h"
+#include "./solutions/student_code_sol.h"
 #include "../../course/common/student/CTester/CTester.h"
+
+void free_elem(elem_t *elem){
+    if (!elem) return;
+    free_elem(elem->left);
+    free_elem(elem->right);
+    free(elem);
+}
+
+void free_tree(tree_t *tree){
+    if (!tree) return
+    free_elem(tree->head);
+    free(tree);
+}
+
+void free_node(node_t *node){
+    if (!node) return;
+    node_t *next = node->next;
+    if (malloced(node)) free(node);
+    free_node(next);
+}
+
+void free_list(list_t *list){
+    if (!list) return;
+    free_node(list->first);
+    free(list);
+}
+
+void compare_list(list_t *ret, int *noma, double *grades, int nb){
+    CU_ASSERT_NOT_EQUAL(ret, NULL);
+    if (ret == NULL) return push_info_msg("You shouldn't return a NULL list");
+    node_t *runner = ret->first;
+    CU_ASSERT_EQUAL(ret->nbr_of_element, nb);
+    if (ret->nbr_of_element != nb) return push_info_msg("You didn't update correctly the size of the list");
+    for (size_t i = 0; i < nb; i++)
+    {
+        CU_ASSERT_NOT_EQUAL(runner, NULL);
+        if (!runner) return push_info_msg("Some nodes are missing");
+        CU_ASSERT_EQUAL(runner->noma, noma[i]);
+        if (runner->noma != noma[i]) return push_info_msg("The nomas aren't in correct order");
+        CU_ASSERT_EQUAL(runner->grade, grades[i]);
+        if (runner->grade != grades[i]) return push_info_msg("The grades aren't in correct order");
+        runner = runner->next;
+    }
+    if (runner) push_info_msg("Your last node's next should point toward NULL");
+    
+}
 
 void test1(){
     set_test_metadata("insert", "Test ajout sans élément présent dans l'arbre", 1);
@@ -25,8 +72,7 @@ void test1(){
         CU_ASSERT_EQUAL(t1->head->grade, 12.2);
         if (t1->head->grade != 12.2) push_info_msg("Wrong grade inserted");
     }
-    free(t1->head);
-    free(t1);
+    free_tree(t1);
 }
 
 void test2(){
@@ -50,8 +96,7 @@ void test2(){
         CU_ASSERT_EQUAL(t2->head->grade, 13.2);
         if (t2->head->grade != 13.2) push_info_msg("You have to update the informations");
     }
-    free(t2->head);
-    free(t2);
+    free_tree(t2);
 }
 
 void test3(){
@@ -74,9 +119,7 @@ void test3(){
         CU_ASSERT_EQUAL(t3->head->right->name, "Cédric");
         CU_ASSERT_EQUAL(t3->head->right->grade, 15.6);
     }
-    free(t3->head->right);
-    free(t3->head);
-    free(t3);
+    free_tree(t3);
 
 }
 
@@ -101,9 +144,7 @@ void test4(){
         CU_ASSERT_EQUAL(t4->head->left->grade, 11.2);
     }
     CU_ASSERT_EQUAL(t4->head->right, NULL);
-    free(t4->head->left);
-    free(t4->head);
-    free(t4);
+    free_tree(t4);
 
 }
 
@@ -141,12 +182,7 @@ void test5(){
     }
     CU_ASSERT_EQUAL(t5->head->right, NULL);
     if (t5->head->right != NULL) push_info_msg("Right tree should be NULL");
-    free(t5->head->left->left->left->left);
-    free(t5->head->left->left->left);
-    free(t5->head->left->left);
-    free(t5->head->left);
-    free(t5->head);
-    free(t5);
+    free_tree(t5);
 
 }
 
@@ -187,31 +223,26 @@ void test6(){
         CU_ASSERT_EQUAL(t6->head->right->right->name, "Juliette");
         CU_ASSERT_EQUAL(t6->head->right->right->grade, 16.5);
     }
-    free(t6->head->left->left->right);
-    free(t6->head->left->left);
-    free(t6->head->left);
-    free(t6->head->right->right);
-    free(t6->head->right);
-    free(t6->head);
-    free(t6);
+    free_tree(t6);
 }
 
 void test7(){
     set_test_metadata("convert", "Test convert avec un arbre ne contenant pas d'élément", 1);
     struct obtree* t7 = (struct obtree*) calloc(1, sizeof(struct obtree));
     t7->head = NULL;
-    struct linked_list * m = (struct linked_list *) calloc(1, sizeof(struct linked_list));
-    m->first = NULL;
-    m->nbr_of_element = 0;
+    struct linked_list * m = NULL;
 
     SANDBOX_BEGIN;
-    convert(t7->head, m);
+    m = convert(t7->head);
     SANDBOX_END;
 
+    CU_ASSERT_NOT_EQUAL(m, NULL);
+    if (m == NULL) return push_info_msg("You shouldn't return NULL when the tree is NULL");
+
     CU_ASSERT_EQUAL(m->first, NULL);
-    if (m->first != NULL) push_info_msg("You should return NULL when the tree is NULL");
-    free(t7);
-    free(m);
+    if (m->first != NULL) push_info_msg("You should set first to NULL when the tree is NULL");
+    free_tree(t7);
+    free_list(m);
 }
 
 void test8(){
@@ -222,10 +253,15 @@ void test8(){
     h8->noma = 50002000;
     h8->grade = 14.8;
     t8->head = h8;
-    struct linked_list * m = (struct linked_list *) calloc(1, sizeof(struct linked_list));
-    m->first = NULL;
-    m->nbr_of_element = 0;
-    convert(t8->head, m);
+    struct linked_list * m = NULL;
+
+    SANDBOX_BEGIN;
+    m = convert(t8->head);
+    SANDBOX_END;
+
+    CU_ASSERT_NOT_EQUAL(m, NULL);
+    if (m == NULL) return push_info_msg("You shouldn't return NULL when the tree is NULL");
+
     CU_ASSERT_NOT_EQUAL(m->first, NULL);
     CU_ASSERT_EQUAL(m->nbr_of_element, 1);
     if (m->nbr_of_element != 1) push_info_msg("Don't forget to update the size of the list");
@@ -235,10 +271,8 @@ void test8(){
         CU_ASSERT_EQUAL(m->first->name, "Jean");
         CU_ASSERT_EQUAL(m->first->next, NULL);
     }
-    free(m->first);
-    free(m);
-    free(h8);
-    free(t8);
+    free_list(m);
+    free_tree(t8);
 
 }
 
@@ -251,58 +285,25 @@ void test9(){
     h9->grade = 14.8;
     t9->head = h9;
 
-    SANDBOX_BEGIN;
-    insert(t9, 45472000 , "Pauline", 17.8);
-    insert(t9, 69902000 , "Marine", 13.2);
-    insert(t9, 22102000 , "Claire", 14.8);
-    insert(t9, 26472000 , "Léa", 17.1);
-    insert(t9, 78742000 , "Juliette", 16.5);
-    SANDBOX_END;
+    insert_sol(t9, 45472000 , "Pauline", 17.8);
+    insert_sol(t9, 69902000 , "Marine", 13.2);
+    insert_sol(t9, 22102000 , "Claire", 14.8);
+    insert_sol(t9, 26472000 , "Léa", 17.1);
+    insert_sol(t9, 78742000 , "Juliette", 16.5);
 
-    CU_ASSERT_NOT_EQUAL(t9->head->left, NULL);
-    if (t9->head->left == NULL){
-        return;
-    }
-    CU_ASSERT_NOT_EQUAL(t9->head->left->left, NULL);
-    if (t9->head->left->left == NULL){
-        return;
-    }
-    struct linked_list * m = (struct linked_list *) calloc(1, sizeof(struct linked_list));
-    m->first = NULL;
-    m->nbr_of_element = 0;
+    struct linked_list * m = NULL;
 
     SANDBOX_BEGIN;
-    convert(t9->head, m);
+    m = convert(t9->head);
     SANDBOX_END;
 
-    int cnt = m->nbr_of_element;
-    struct linked_node* n = m->first;
     int expected_noma[] = {22102000, 26472000, 45472000, 50002000, 69902000, 78742000};
     double expected_grade[] = {14.8, 17.1, 17.8, 14.8, 13.2, 16.5};
-    int i = 0;
-    while(cnt>0){
-        CU_ASSERT_NOT_EQUAL(n, NULL);
-        if (n!= NULL){
-            CU_ASSERT_EQUAL(n->noma, expected_noma[i]);
-            CU_ASSERT_EQUAL(n->grade, expected_grade[i++]);
-        }
-        n = n->next;
-        cnt--;
-    }
-    free(t9->head->left->left->right);
-    free(t9->head->left->left);
-    free(t9->head->left);
-    free(t9->head->right->right);
-    free(t9->head->right);
-    free(t9->head);
-    free(t9);
-    free(m->first->next->next->next->next->next);
-    free(m->first->next->next->next->next);
-    free(m->first->next->next->next);
-    free(m->first->next->next);
-    free(m->first->next);
-    free(m->first);
-    free(m);
+    
+    compare_list(m, expected_noma, expected_grade, 6);
+
+    free_tree(t9);
+    free_list(m);
 }
 
 void test10(){
@@ -314,56 +315,24 @@ void test10(){
     h10->grade = 14.8;
     t10->head = h10;
 
-    SANDBOX_BEGIN;
-    insert(t10, 40002000 , "Paul", 18.8);
-    insert(t10, 30002000 , "Marie", 10.2);
-    insert(t10, 20002000 , "Chloe", 19.8);
-    insert(t10, 10002000 , "Loic", 10.1);
-    SANDBOX_END;
+    insert_sol(t10, 40002000 , "Paul", 18.8);
+    insert_sol(t10, 30002000 , "Marie", 10.2);
+    insert_sol(t10, 20002000 , "Chloe", 19.8);
+    insert_sol(t10, 10002000 , "Loic", 10.1);
 
-    CU_ASSERT_NOT_EQUAL(t10->head->left, NULL);
-    if (t10->head->left == NULL){
-        return;
-    }
-    CU_ASSERT_NOT_EQUAL(t10->head->left->left->left, NULL);
-    if (t10->head->left->left->left == NULL){
-        return;
-    }
-    struct linked_list * m = (struct linked_list *) calloc(1, sizeof(struct linked_list));
-    m->first = NULL;
-    m->nbr_of_element = 0;
+    struct linked_list * m = NULL;
 
     SANDBOX_BEGIN;
-    convert(t10->head, m);
+    m = convert(t10->head);
     SANDBOX_END;
 
-    int cnt = m->nbr_of_element;
-    struct linked_node* n = m->first;
     int expected_noma[] = {10002000, 20002000, 30002000, 40002000, 50002000};
     double expected_grade[] = {10.1, 19.8, 10.2, 18.8, 14.8};
-    int i = 0;
-    CU_ASSERT_EQUAL(cnt, 5);
-    while(cnt>0){
-        CU_ASSERT_NOT_EQUAL(n, NULL);
-        if (n!= NULL){
-            CU_ASSERT_EQUAL(n->noma, expected_noma[i]);
-            CU_ASSERT_EQUAL(n->grade, expected_grade[i++]);
-        }
-        n = n->next;
-        cnt--;
-    }
-    free(t10->head->left->left->left->left);
-    free(t10->head->left->left->left);
-    free(t10->head->left->left);
-    free(t10->head->left);
-    free(t10->head);
-    free(t10);
-    free(m->first->next->next->next->next);
-    free(m->first->next->next->next);
-    free(m->first->next->next);
-    free(m->first->next);
-    free(m->first);
-    free(m);
+
+    compare_list(m, expected_noma, expected_grade, 5);
+
+    free_tree(t10);
+    free_list(m);
 }
 
 int main(int argc,char** argv)

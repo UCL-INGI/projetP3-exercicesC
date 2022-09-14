@@ -8,6 +8,6 @@ struct obtree* insert(struct obtree *tree, int noma, char* name, double grade) {
 	@@insert@@
 }
 
-void convert(struct element * head, struct linked_list * n){
+struct linked_list *convert(struct element * head){
 	@@convert@@
 }

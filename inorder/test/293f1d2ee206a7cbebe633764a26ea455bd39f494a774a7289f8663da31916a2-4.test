@@ -1,0 +1,115 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 4
+    cc_q2: 3
+    nlines_q1: 9
+    nlines_q2: 7
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-08 10:12:38.101225'
+    '@username': test
+    auxiliary: |-
+        void in_order_help(tree_t *tree, int *buffer, int offset){
+            if (!tree) return;
+            int newOffset = 0;
+            in_order_help(tree->left, buffer, offset);
+            if (tree->left) newOffset += tree->left->number_elements;
+            *(buffer + offset + newOffset) = tree->value;
+            newOffset++;
+            if (tree->right) in_order_help(tree->right, buffer, offset+newOffset);
+        }
+    inorder: |-
+        if (!tree) return NULL;
+        int *ret = malloc(tree->number_elements*sizeof(int));
+        if (!ret) return NULL;
+        in_order_help(tree, ret, 0);
+        return ret;
+problems:
+    inorder:
+    - success
+    - |+
+        * Test in-order for a simple balanced binary tree
+          => réussi (1/1) pts
+        * Test in-order linear binary tree (only right child)
+          => réussi (1/1) pts
+        * Test in-order linear binary tree (only left child)
+          => réussi (1/1) pts
+        * Test in-order binary tree (with missing right/left children)
+          => réussi (1/1) pts
+        * Test in-order binary tree (random tree)
+          => réussi (1/1) pts
+        * Test in-order binary tree with failed malloc
+          => réussi (1/1) pts
+        * Test in-order binary tree with NULL tree
+          => réussi (1/1) pts
+response_type: rst
+result: success
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      1      0        0
+                 asserts      4      4      4      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts      4      4      4      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      1      0        0
+                 asserts      4      4      4      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      1      0        0
+                 asserts      8      8      8      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts   2000   2000   2000      0      n/a
+    Elapsed time =    0.001 seconds
+    ==== Results for test test6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      1      0        0
+                 asserts      3      3      3      0      n/a
+    Elapsed time =    0.000 seconds
+taskid: inorder
+tests: {}
+text: |-
+    - Votre code compile.
+    - Votre code a passé tous les tests.

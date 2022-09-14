@@ -8,29 +8,21 @@ context: |
 
     De plus, la structure du système de fichiers de Linux peut-être représenté par un arbre, avec "/" la racine de tous les fichiers.
 
-    Vous devez ici écrire une fonction baptisée :code:`get_number_of_files` qui, sur base d'un fichier donné (un fichier qui peut donc être un dossier),
+    Vous devez ici écrire une fonction baptisée :code:`get_number_of_files` qui, sur base d'un chemin d'un fichier donné (un fichier qui peut donc être un dossier),
     retourne le nombre de fichiers standards contenus dans celui-ci et dans tous ses sous-dossiers.
-    Si le fichier donné en argument est NULL, la fonction doit retourner -1;
+    Si le chemin du fichier n'existe pas, la fonction doit retourner -1;
 
     *INDICE : implémenter une version récursive est ici facile et efficace !*
 
-    On considère que les fichiers sont décrits par la structure suivante :
-
-        .. code-block:: c
-
-            typedef struct file
-            {
-                file_t ** files;// liste contenant tous les pointeurs vers les fichiers contenus dans le fichier (si celui-ci est un répertoire)
-                int folder;    // true (=1) si c'est un répertoire, false (=0) sinon
-                int n_files;    // le nombre de fichier (standards et répertoires) contenus dans le fichier, SI celui-ci est un répertoire
-                void * content; // modélise le contenu du fichier (non-utilisé dans cet exercice)
-            } file_t;
-
     Exemples d'utilisation:
 
-        - Pour le dossier Documents, contenant : a, b et c (3 fichiers standards) : get_number_of_files(Documents) retourne 3
+        - Pour le dossier *Documents*, contenant : *a*, *b* et *c* (3 fichiers standards) : :code:`get_number_of_files("./Documents")` retourne :code:`3`
 
-        - Pour le dossier Home, contenant le dossier Documents (précédemment décrit), et le dossier Downloads qui lui contient : d (fichier standard) et y (Dossier). y contient uniquement e (fichier standard). get_number_of_files(Home) retourne 5
+        - Pour le dossier *Home*, contenant le dossier *Documents* (précédemment décrit), et le dossier *Downloads* qui lui contient : *d* (fichier standard) et *y* (Dossier). *y* contient uniquement *e* (fichier standard). :code:`get_number_of_files("./Home")` retourne :code:`5`
+
+    N.B.: Nous vous conseillons d'utiliser les fonctions `stat <https://man7.org/linux/man-pages/man2/lstat.2.html>`_, `S_ISREG <https://linux.die.net/man/2/stat>`_, `opendir <https://man7.org/linux/man-pages/man3/opendir.3.html>`_, `readdir <https://man7.org/linux/man-pages/man3/readdir.3.html>`_.
+
+    Faites attention au fait que readdir renvoie également dans un dossier les chemins :code:`"."` et :code:`".."`, que vous ne devez pas traiter (au risque de créer des boucles infinies).
 environment_id: cpp
 environment_parameters:
     limits:
@@ -53,12 +45,13 @@ problems:
                 .. code-block:: c
 
                     /*
-                     *@pre file est un répertoire, possiblement NULL
-                     *@post retourne le nombre de fichiers contenus dans 'file'
-                     *               -1 si file== NULL
+                     *@pre path is a string containing the path to an hypothetical folder/file
+                     *@post returns - number of files contained in "path"
+                     *              - -1 if the path doesn't exists
+                     *              - -2 if opendir failed
                      */
-                    int get_number_of_files (file_t * file){
-        language: ''
+                    int get_number_of_files (const char *path){
+        language: c
         default: ''
 stored_submissions: 0
 submission_limit:

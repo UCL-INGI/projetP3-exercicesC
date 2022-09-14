@@ -34,7 +34,7 @@ evaluate: best
 file: ''
 groups: false
 input_random: 0
-name: Map my Linked List
+name: Map my Linked List (Not in Use => see exercice STREAMS)
 network_grading: false
 problems:
     prototype:

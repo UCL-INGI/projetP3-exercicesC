@@ -1,0 +1,121 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 3
+    cc_q2: 1
+    nlines_q1: 8
+    nlines_q2: 3
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-12 10:58:04.204725'
+    '@username': test
+    auxiliary: |-
+        node_t* reverseHelp(node_t* head, node_t *acc){
+            if (!head) return acc;
+            node_t *new = malloc(sizeof(node_t));
+            if (!new) return NULL;
+            new->val = head->val;
+            new->next = acc;
+            return reverseHelp(head->next, new);
+        }
+    reverse: return NULL;
+problems:
+    reverse:
+    - failed
+    - |+
+        * Test minimum de [-1,1,5,10]
+          => échoué (0/1) pts
+          Info: Wrong list value. With the initial list [-1, 1, 5, 10], you returned NULL
+        * Test minimum de [-10, 1, 5]
+          => échoué (0/1) pts
+          Info: Wrong list value. With the initial list [-10, 1, 5], you returned NULL
+        * Test on more elements
+          => échoué (0/1) pts
+          Info: Wrong list value. With the initial list [7, 6, 5, 4, 3, 2, 1], you returned NULL
+        * Test for NULL as last next
+          => échoué (0/1) pts
+          Info: Wrong list value. With the initial list [-10, 1], you returned NULL
+        * Test for a NULL list
+          => réussi (1/1) pts
+        * Test with failed malloc
+          => réussi (1/1) pts
+        * Test random malloc fails
+          => réussi (1/1) pts
+response_type: rst
+result: failed
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test1 had failures:
+        1. tests.c:43  - CU_ASSERT_NOT_EQUAL(res,NULL)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test2 had failures:
+        1. tests.c:43  - CU_ASSERT_NOT_EQUAL(res,NULL)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test3 had failures:
+        1. tests.c:43  - CU_ASSERT_NOT_EQUAL(res,NULL)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test4 had failures:
+        1. tests.c:43  - CU_ASSERT_NOT_EQUAL(res,NULL)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+taskid: reverse
+tests: {}
+text: |-
+    - Votre code compile.
+    - Il y a des erreurs dans votre solution.

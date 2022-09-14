@@ -54,26 +54,22 @@ struct obtree* insert_sol(struct obtree *tree, int noma, char* name, double grad
 }
 
 
-struct linked_list* push_sol(struct element * head, struct linked_list * n){               //sous-fonction utilisée pour implémenter convert
+void push_sol(node_t **node, int noma, char *name, double grade){
+    node_t *ret = malloc(sizeof(node_t));
+    ret->next = *node;
+    ret->noma = noma;
+    ret->name = name;
+    ret->grade = grade;
+    *node = ret;
+}
 
-    struct linked_node* to_add = (struct linked_node *) calloc(1, sizeof(struct linked_node));
-    to_add->noma = head->noma;
-    to_add->grade = head->grade;
-    to_add->name = head->name;
-    to_add->next = NULL;
-
-    if (n->nbr_of_element == 0){
-        n->first = to_add;
-        n->nbr_of_element++;
-        return n;
-    }
-    struct linked_node* current = n->first;
-    while(current->next != NULL){
-        current = current->next;
-    }
-    current->next = to_add;
-    n->nbr_of_element++;
-    return n;
+node_t *convert_help_sol(elem_t *head, node_t **acc, int *count){
+    if (!head) return NULL;
+    convert_help_sol(head->right, acc, count);
+    push_sol(acc, head->noma, head->name, head->grade);
+    (*count)++;
+    convert_help_sol(head->left, acc, count);
+    return *acc;
 }
 
 
@@ -84,12 +80,11 @@ struct linked_list* push_sol(struct element * head, struct linked_list * n){    
         ordre croissant suivant leur noma
  */
 
-void convert_sol(struct element * head, struct linked_list * n){
-    if (head != NULL){
-        convert(head->left, n);                 // on utilise un parcours infixe de l'arbre pour obtenir une linked_list avec comme
-        n = push_sol(head, n);                      // éléments des étudiants classés par ordre croissant suivant leur noma
-        convert(head->right, n);
-    }
+list_t *convert_sol(elem_t * head){
+    list_t *ret = malloc(sizeof(list_t));
+    node_t *acc[1] = {NULL};
+    ret->first = convert_help_sol(head, acc, &ret->nbr_of_element);
+    return ret;
 }
 
 

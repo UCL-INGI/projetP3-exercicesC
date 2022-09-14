@@ -1,0 +1,129 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 8
+    nlines_q1: 28
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-12 10:41:46.366092'
+    '@username': test
+    transform: |4-
+            int** matrix = (int**) malloc(n * sizeof(int*));
+            if (matrix == NULL) return NULL;
+            for (int i = 0; i < n; i++) {
+                matrix[i] = (int*) malloc(m * sizeof(int));
+                if (matrix[i] == NULL) {
+                    for (int j = 0; j < i; ++j) {
+                        free(matrix[j]);
+                    }
+                    free(matrix);
+                }
+            }
+            node_t *current = lst->first;
+            int count = 0;
+            for (int i = 0; i < lst->size; i++)
+            {
+                if (i >= n*m) return matrix;
+                matrix[count / m][count % m] = current->value;
+                current = current->next;
+                count++;
+            }
+            for (int i = count ; i < n*m; i++)
+            {
+                matrix[count / m][count % m] = -1;
+                count++;
+            }
+            return matrix;
+problems:
+    transform:
+    - failed
+    - |+
+        * Test basique pour matrice 3*3 avec liste de size 9
+          => réussi (1/1) pts
+        * Test basique pour matrice 3*2 avec liste de size 9
+          => réussi (1/1) pts
+        * Test basique pour matrice 2*3 avec liste de size 9
+          => réussi (1/1) pts
+        * Test basique pour matrice 4*3 avec liste de size 9, chiffres manquants = -1
+          => réussi (1/1) pts
+        * Test basique pour matrice 3*4 avec liste de size 9, chiffres manquants = -1
+          => réussi (1/1) pts
+        * test avec lst->first = NULL, lst.size = 0
+          => réussi (1/1) pts
+        * test avec malloc échouant
+          => échoué (0/1) pts
+          Info: Your code produced a segfault. — You should return NULL when malloc fails
+response_type: rst
+result: success
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      1      0        0
+                 asserts     13     13     13      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts     10     10     10      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      1      0        0
+                 asserts      9      9      9      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      1      0        0
+                 asserts     17     17     17      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts     16     16     16      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts     16     16     16      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test7 had failures:
+        1. CTester.c:171  - CU_FAIL("Segfault or timeout")
+        2. tests.c:345  - CU_ASSERT_EQUAL(matrix,NULL)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      0      1        0
+                 asserts      2      2      0      2      n/a
+    Elapsed time =    0.000 seconds
+taskid: matrix
+tests:
+    sigsegv: true
+text: |-
+    - Votre code compile.
+    - Il y a des erreurs dans votre solution.

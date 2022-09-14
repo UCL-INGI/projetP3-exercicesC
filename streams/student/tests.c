@@ -22,6 +22,7 @@ char *str_list(list_t *list){
     node_t *curr = list->first;
     strcpy(ret, "[");
     for (int i = 0; i<list->size; i++){
+		if (!curr) break;
         char *value= i == list->size - 1 ? "%d" : "%d, ";
         char temp[strlen(value)];
         sprintf(temp, value, curr->value);
@@ -54,15 +55,32 @@ void error(list_t *ret, char *init, function_t function){
 }
 
 void free_list(list_t *list){
+	if (!list) return;
 	node_t *curr = list->first;
 	for (size_t i = 0; i < list->size; i++)
 	{
+		if (!curr) break;
 		node_t *temp = curr;
 		curr = curr->next;
-		free(temp);
+		if (malloced(temp)) free(temp);
 	}
 	free(list);
 	
+}
+
+void compare_list(int *expected, int nb, list_t *list, function_t f, char *init){
+	if (!list) return push_info_msg("Your list shouldn't be NULL");
+	CU_ASSERT_EQUAL(list->size, nb);
+	if (list->size != nb) return push_info_msg("You don't update correctly the size of the list");
+	node_t *curr = list->first;
+	for (int i = 0; i < nb; i++){
+		if (!curr) return error(list, init, f);
+		CU_ASSERT_EQUAL(curr->value, expected[i]);
+		if (curr->value != expected[i]) return error(list, init, f);
+		curr = curr->next;
+	}
+	CU_ASSERT_EQUAL(curr, NULL);
+	if (curr != NULL) return push_info_msg("Your last node should be pointing to NULL");
 }
 
 
@@ -123,31 +141,9 @@ void test_filter4(){
 	filter(list4, filter_function);
 	SANDBOX_END;
 
-	int flag = 1;
+	int exp[] = {2, 16, 4, 18};
 
-	node_t* current = list4->first;
-	CU_ASSERT_EQUAL(current->value, 2);
-	if (current->value != 2) flag = 0;
-	current = current->next;
-
-	CU_ASSERT_EQUAL(current->value, 16);
-	if (current->value != 16) flag = 0;
-	current = current->next;
-
-	CU_ASSERT_EQUAL(current->value, 4);
-	if (current->value != 4) flag = 0;
-	current = current->next;
-
-	CU_ASSERT_EQUAL(current->value, 18);
-	if (current->value != 18) flag = 0;
-
-	CU_ASSERT_EQUAL(current->next, NULL);
-	if (current->next != NULL) flag = 0;
-
-	if (!flag) error(list4, list_str, PRED);
-
-	CU_ASSERT_EQUAL(list4->size, 4);
-	if (list4->size != 4 ) push_info_msg("You have to update the size of the list");
+	compare_list(exp, 4, list4, PRED, list_str);
 
 	free_list(list4);
 	free(list_str);
@@ -170,32 +166,9 @@ void test_filter5(){
 	filter(list5, filter_function);
 	SANDBOX_END;
 
-	int flag = 1;
+	int exp[] = {10, 120, 4, 18};
 
-	node_t* current = list5->first;
-
-	CU_ASSERT_EQUAL(current->value, 10);
-	if (current->value != 10) flag = 0;
-	current = current->next;
-
-	CU_ASSERT_EQUAL(current->value, 120);
-	if (current->value != 120) flag = 0;
-	current = current->next;
-
-	CU_ASSERT_EQUAL(current->value, 4);
-	if (current->value != 4) flag = 0;
-	current = current->next;
-
-	CU_ASSERT_EQUAL(current->value, 18);
-	if (current->value != 18) flag = 0;
-
-	CU_ASSERT_EQUAL(current->next, NULL);
-	if (current->next != NULL) flag = 0;
-
-	CU_ASSERT_EQUAL(list5->size, 4);
-	if (list5->size != 4 ) push_info_msg("You have to update the size of the list");
-
-	if (!flag) error(list5, list_str, PRED);
+	compare_list(exp, 4, list5, PRED, list_str);
 
 	free_list(list5);
 	free(list_str);
@@ -216,21 +189,9 @@ void test_filter6(){
 	filter(list6, filter_function);
 	SANDBOX_END;
 
-	int flag = 1;
+	int exp[] = {4, 2};
 
-	CU_ASSERT_EQUAL(list6->size, 2);
-	if (list6->size != 2 ) push_info_msg("You have to update the size of the list");
-
-	CU_ASSERT_EQUAL(list6->first->value, 4);
-	if (list6->first->value != 4) flag = 0;
-
-	CU_ASSERT_EQUAL(list6->first->next->value, 2);
-	if (list6->first->next->value != 2) flag = 0;
-
-	CU_ASSERT_EQUAL(list6->first->next->next, NULL);
-	if (list6->first->next->next != NULL) flag = 0;
-
-	if (!flag) error(list6, list_str, PRED);
+	compare_list(exp, 2, list6, PRED, list_str);
 
 	free_list(list6);
 	free(list_str);

@@ -1,27 +1,29 @@
+#ifndef S_CODE_H
+#define S_CODE_H
 //structures données dans l'énoncé
-struct element {
+typedef struct element {
     struct element* left;
     struct element* right;
     int noma;
     char* name;
     double grade;
-};
+}elem_t;
 
-struct obtree{
+typedef struct obtree{
     struct element* head;
-};
+}tree_t;
 
-struct linked_node{
+typedef struct linked_node{
     struct linked_node* next;
     int noma;
     char* name;
     double grade;
-};
+}node_t ;
 
-struct linked_list{
+typedef struct linked_list{
     struct linked_node* first;
     int nbr_of_element;
-};
+}list_t ;
 
 
 
@@ -34,4 +36,5 @@ struct obtree* insert(struct obtree *tree, int noma, char* name, double grade);
         ordre croissant suivant leur noma
  */
 
-void convert(struct element * head, struct linked_list * n);
+struct linked_list *convert(struct element * head);
+#endif

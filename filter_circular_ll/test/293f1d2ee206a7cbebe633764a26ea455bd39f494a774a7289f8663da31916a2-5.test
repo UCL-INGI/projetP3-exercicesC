@@ -1,0 +1,155 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 10
+    nlines_q1: 43
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-04 23:04:49.799802'
+    '@username': test
+    filter: |-
+        if (list == NULL || predicate == NULL) {
+            return NULL;
+        }
+        list_t *l = (list_t *)malloc(sizeof(list_t));
+        if (!l) {
+            return NULL;
+        }
+        int size = 0;
+        l->tail = NULL;
+        l->size = 0;
+        if (list->tail == NULL) {
+            return l;
+        }
+        node_t *runner = list->tail->next;
+        node_t *n_head = NULL;
+        node_t *n_runner = NULL;
+        for (int i = 0; i < list->size; ++i) {
+            if (predicate(runner->value) == 1) {
+                // Keep the node
+                node_t *new = (node_t *)malloc(sizeof(node_t));
+                if (!new) {
+                    return NULL;
+                }
+                new->value = runner->value;
+                new->next = NULL;
+                if (n_head == NULL) {
+                    n_head = new;
+                } else {
+                    n_runner->next = new;
+                }
+                n_runner = new;
+                ++size;
+            } else {
+                // Reject the node
+                // Nothing to do?
+            }
+            runner = runner->next;
+        }
+        // If all nodes are filtered. This is a particular case. Without this condition, the code loops and no feedback is given.
+        // It should definitely give some message to the student because a lot of thel will not think about this
+        // particular case. TODO: handle the infinite loop and give some feedback
+        if (n_runner != NULL) {
+            n_runner->next = n_head;
+        }
+        l->tail = n_runner;
+        l->size = size;
+        return l;
+problems:
+    filter:
+    - success
+    - |+
+        * Test liste vide
+          => réussi (1/1) pts
+        * Test liste NULL
+          => réussi (1/1) pts
+        * Test node unique acceptée
+          => réussi (1/1) pts
+        * Test node unique rejetée
+          => réussi (1/1) pts
+        * Test tail modifée
+          => réussi (1/1) pts
+        * Test tail inchangée
+          => réussi (1/1) pts
+        * Test longue liste rejetée
+          => réussi (1/1) pts
+        * Test liste initiale inchangée
+          => réussi (1/1) pts
+response_type: rst
+result: success
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test_empty : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      1      0        0
+                 asserts      3      3      3      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_null : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_single_accepted : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      1      0        0
+                 asserts      5      5      5      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_single_rejected : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      1      0        0
+                 asserts      3      3      3      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_triple_even_modified_tail : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts      2      2      2      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_triple_even_unchanged_tail : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts      3      3      3      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_five_rejected : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      1      0        0
+                 asserts      3      3      3      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_unchanged_initial_list : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      8      1      1      0        0
+                 asserts      4      4      4      0      n/a
+    Elapsed time =    0.000 seconds
+taskid: filter_circular_ll
+tests: {}
+text: |-
+    - Votre code compile.
+    - Votre code a passé tous les tests.
