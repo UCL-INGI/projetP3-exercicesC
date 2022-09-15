@@ -3,9 +3,9 @@ author: Hugo Siberdt Anthony Doeraene
 categories: []
 contact_url: ''
 context: |-
-    Dans cet exercice, vous êtes chargés d'implémenter une fonction permettant d'ajouter un objet à une liste d'achat d'un client.
+    In this exercice, you'll have to implement a function to add a product to the consumer'shopping cart.
 
-    Vous disposez des deux structure suivantes:
+    You'll have to use the following structures:
 
         .. code-block:: c
 
@@ -26,19 +26,19 @@ context: |-
                 unsigned int size;
             } consumer_t;
 
-    Le client dispose par défaut d'un sac (:code:`bag`) de taille :code:`bagsize` rempli d'objets (:code:`stuff_t`) vides (représentés par :code:`NULL`) représentant les places disponibles dans le sac.
-    Le sac fonctionne comme une pile, c'est à dire que les objets achetés sont placés dedans l'un à la suite de l'autre.
-    La variable :code:`dontLike` est une liste de taille :code:`size` contenant des :code:`char*` représentant le nom des articles que le client n'aime pas.
+    The client has by default a bag (:code:`bag`) of size :code:`bagsize` filled with empty items (:code:`stuff_t`) (represented by :code:`NULL`).
+    The bag acts as a stack, thus items added to the bag should be put just after the last item bought.
+    The variable :code:`dontLike` is an array of size :code:`size` containing :code:`char*` representing the name of items that the consumer doesn't like.
 
-    On vous demande d'écrire une fonction baptisée AddStuff.
+    We ask you to write a function called :code:`AddStuff`.
 
-    Exemples d'utilisation:
+    Examples of use:
 
-    Supposons un client dont le nom est Maximus, qui dispose d'un sac de taille 10 d'un budget de 5000 et qui n'aime pas la "salade" ni le "poisson" (:code:`dontLike = ["salade", "poisson"]`).
+    Let's suppose a consumer called Maximus, with a bag of size 10 and a budget of 5000, moreover this consumer doesn't like "salad" nor "fish" (:code:`dontLike = ["salad", "fish"]`).
 
-    - :code:`AddStuff(client, "teddy bear", 10);` ajoute au sac de Maximus l'objet "teddy bear". Il y a donc 1 "teddy bear" et 9 objets "vide" dans le sac pour un coût total de 10.
-    - :code:`AddStuff(client, "salade", 5);` n'ajoute rien au sac de Maximus car il n'aime pas la salade. Il y a donc 1 "teddy bear" et 9 objets "vide" dans le sac pour un coût total de 10.
-    - :code:`AddStuff(client, "TV", 200);` ajoute au sac de Maximus l'objet "TV". Il y a donc 1 "teddy bear", une "TV" et 8 objets "vide" dans le sac pour un coût total de 210.
+    - :code:`AddStuff(client, "teddy bear", 10);` add to Maximus' bag the "teddy bear" item. There is thus 1 "teddy bear" and 9 empty items in his bag, with a total cost of 10.
+    - :code:`AddStuff(client, "salade", 5);` add nothing to Maximus' bag beacuse he doesn't like salad. There is thus 1 "teddy bear" and 9 empty items in his bag, with a total cost of 10.
+    - :code:`AddStuff(client, "TV", 200);` add to Maximus' bag the "TV" item. There is thus 1 "teddy bear", 1 "TV" and 8 empty items in his bag, with a total cost of 210.
 environment_id: cpp
 environment_parameters:
     limits:
@@ -51,7 +51,7 @@ evaluate: best
 file: ''
 groups: false
 input_random: 0
-name: Client
+name: Consumer
 network_grading: false
 problems:
     addstuff:
@@ -62,23 +62,23 @@ problems:
 
                     /**
                     *
-                    * Ajout d'un objet dans le sac du client
+                    * Add an item to the consumer's bag
                     *
-                    * Si le prix total des objets du sac dépasse le budget du client, il ne pourra pas acheter l'objet et dans ce cas rien n'est ajouté au sac
-                    * Si le client n'aime pas l'objet proposé, il ne l'achètera pas et dans ce cas rien n'est ajouté au sac
-                    * S'il n'y a plus d'objet "vide" dans le sac (c'est-à-dire qu'il n'y a plus de place), le client ne pourra pas acheter l'objet proposé et dans ce cas rien n'est ajouté au sac
+                    * Sif the total cost of items in a consumer's bag exceeds his budget, he won't be able to buy the items, thus nothing is added to the bag
+                    * If the client doesn't like the product, he won't buy it and nothing is added to is bag
+                    * If his bag is full (no more empty items), the consumer won't be able to buy it and nothing is done
                     *
-                    * Si le sac du client est vide (total = 0), vous devez initialiser celui-ci avant de rajouter l'objet au sac du client
+                    * If the consumer's bag is empty (total = 0), you must initialize it before adding the item to it
                     *
-                    * @param client: le client en question
-                    * @param name: une chaine de caractères représentant le nom de l'objet (le nom est différent de "vide")
-                    * @param price: le prix de l'objet (price >= 0)
-                    * @return:  0 si aucune erreur
-                    *          -1 si client == NULL ou si name == NULL
-                    *          -2 si price > budget
-                    *          -3 si name appartient à client->dontLike
-                    *          -4 si malloc échoue
-                    *          -5 si le sac du client est plein ou si bagSize == 0
+                    * @param client: the consumer which will add an item to his bag
+                    * @param name: a string representing the name of the bought item
+                    * @param price: the price of the item (price >= 0)
+                    * @return:  0 if no error
+                    *          -1 if client == NULL or if name == NULL
+                    *          -2 if price > budget
+                    *          -3 if name contained in client->dontLike
+                    *          -4 if malloc fails
+                    *          -5 if client->bag is full of if bagSize == 0
                     */
                     void AddStuff(consumer_t* client, char* name, unsigned int price);
         language: c
@@ -86,7 +86,7 @@ problems:
     auxiliary:
         type: code
         name: Méthodes auxiliaires
-        header: Ecrivez vos autres fonctions ici
+        header: Write your auxiliary functions here
         language: c
         optional: 'on'
         default: ''

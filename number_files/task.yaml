@@ -3,26 +3,26 @@ author: Paulin Eliat-Eliat Anthony Doeraene
 categories: []
 contact_url: ''
 context: |
-    Comme vous le savez déjà peut-être, sous Linux : *"everything is a file"*. En effet, même les dossiers sont en fait aussi des fichiers !
-    Les deux principaux types de fichiers sont les fichiers standards (ou ordinaires) et les répertoires.
+    As you perhaps already know, in Linux : *"everything is a file"*. Indeed, even folders are actually files!
+    The two most important type of files are regular files and folders.
 
-    De plus, la structure du système de fichiers de Linux peut-être représenté par un arbre, avec "/" la racine de tous les fichiers.
+    Moreover, the structures of files in Linux can be represented as a tree, with "/" the root of all files.
 
-    Vous devez ici écrire une fonction baptisée :code:`get_number_of_files` qui, sur base d'un chemin d'un fichier donné (un fichier qui peut donc être un dossier),
-    retourne le nombre de fichiers standards contenus dans celui-ci et dans tous ses sous-dossiers.
-    Si le chemin du fichier n'existe pas, la fonction doit retourner -1;
+    You must implement a function called :code:`get_number_of_files` which will take a path in argument,
+    and return the number of regular files contained in this path (or in sub-folder).
+    If the path doesn't exist, your function should return -1;
 
-    *INDICE : implémenter une version récursive est ici facile et efficace !*
+    *Hint : Implementing a recursive functions is easier and efficient !*
 
-    Exemples d'utilisation:
+    For example:
 
-        - Pour le dossier *Documents*, contenant : *a*, *b* et *c* (3 fichiers standards) : :code:`get_number_of_files("./Documents")` retourne :code:`3`
+        - For the folder *Documents*, which contains : *a*, *b* et *c* (3 regular files) : :code:`get_number_of_files("./Documents")` returns :code:`3`
 
-        - Pour le dossier *Home*, contenant le dossier *Documents* (précédemment décrit), et le dossier *Downloads* qui lui contient : *d* (fichier standard) et *y* (Dossier). *y* contient uniquement *e* (fichier standard). :code:`get_number_of_files("./Home")` retourne :code:`5`
+        - For the folder *Home*, which contains the folder *Documents* (see above), and the folder *Downloads* which itself contains : *d* (regular file) et *y* (folder). *y* contains only *e* (regular file). :code:`get_number_of_files("./Home")` returns :code:`5`
 
-    N.B.: Nous vous conseillons d'utiliser les fonctions `stat <https://man7.org/linux/man-pages/man2/lstat.2.html>`_, `S_ISREG <https://linux.die.net/man/2/stat>`_, `opendir <https://man7.org/linux/man-pages/man3/opendir.3.html>`_, `readdir <https://man7.org/linux/man-pages/man3/readdir.3.html>`_.
+    N.B.: We recommend you to use these functions of the standard library :  `stat <https://man7.org/linux/man-pages/man2/lstat.2.html>`_, `S_ISREG <https://linux.die.net/man/2/stat>`_, `opendir <https://man7.org/linux/man-pages/man3/opendir.3.html>`_, `readdir <https://man7.org/linux/man-pages/man3/readdir.3.html>`_.
 
-    Faites attention au fait que readdir renvoie également dans un dossier les chemins :code:`"."` et :code:`".."`, que vous ne devez pas traiter (au risque de créer des boucles infinies).
+    Be careful that readdir return also the path to :code:`"."` et :code:`".."` in a folder. You should ignore these path, otherwise, it will create infinite loops.
 environment_id: cpp
 environment_parameters:
     limits:
@@ -46,7 +46,7 @@ problems:
 
                     /*
                      *@pre path is a string containing the path to an hypothetical folder/file
-                     *@post returns - number of files contained in "path"
+                     *@post return - number of files contained in "path"
                      *              - -1 if the path doesn't exists
                      *              - -2 if opendir failed
                      */

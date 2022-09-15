@@ -3,14 +3,14 @@ author: Anthony Doeraene
 categories: []
 contact_url: ''
 context: |-
-    Dans cet exercice, vous devrez écrire une fonction réalisant le parcours infixe d'un arbre binaire donné par la structure tree_t.
-    Pour rappel, un parcous infixe visite les noeuds dans cet ordre:
+    Inn this exercice, you have to write a function which will travel a tree :code:`tree_t` according to an inorder tour.
+    As a reminder, an inorder tour visits the nodes in this order:
 
-    #. Le sous-arbre de gauche
-    #. Le noeud même
-    #. Le sous-arbre de droite
+    #. The left sub-tree
+    #. The actual node
+    #. The right sub-tree
 
-    La strucure tree_t est définie comme suit:
+    The structure :code:`tree_t` is defined as below:
 
         .. code-block:: c
 

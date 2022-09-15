@@ -3,9 +3,9 @@ author: Roy Makhlouf Anthony Doeraene
 categories: []
 contact_url: ''
 context: |
-    Vous devez écrire une fonction baptisée addLinkedLists qui retourne une liste chainée correspondant à la somme d'entiers positifs, ceux-ci étant représentés à l'envers dans deux autres listes chainées.
+    You have to write a function called addLinkedLists which will add two integers, represented using reversed linked lists.
 
-    Ces listes chainées sont représentées par la structure suivante:
+    The linked lists are represented using the following structure:
 
         .. code-block:: c
 
@@ -14,13 +14,13 @@ context: |
                 struct node *next;
             } node_t;
 
-    Exemples d'utilisation
+    Examples of use
 
-    - :code:`addLinkedLists(1->2->3->NULL, 2->3->4->NULL)`, la première liste chainée représente :code:`321` tandis que la deuxième représente le nombre :code:`432`. Si on additionne ces nombres, on obtiens :code:`753`, la fonction doit donc retourner :code:`3->5->7->NULL`
+    - :code:`addLinkedLists(1->2->3->NULL, 2->3->4->NULL)`, the first linked list represent :code:`321` while the second represent :code:`432`. If we add these numbers, we obtain :code:`753`, the function must thus return :code:`3->5->7->NULL`
 
-    - :code:`addLinkedLists(9->9->9->NULL, 1->NULL)`, la première liste chainée représente :code:`999` tandis que la deuxième représente le nombre :code:`1`. Si on additionne ces nombres, on obtiens :code:`1000`, la fonction doit donc retourner :code:`0->0->0->1->NULL`
+    - :code:`addLinkedLists(9->9->9->NULL, 1->NULL)`, the first linked list represent :code:`999` while the second represent :code:`1`. If we add these numbers, we obtain :code:`1000`, the function must thus return :code:`0->0->0->1->NULL`
 
-    - :code:`addLinkedLists(5->9->2->NULL, 1->2->2->4->NULL)`, la première liste chainée représente :code:`295` tandis que la deuxième représente le nombre :code:`4221`. Si on additionne ces nombres, on obtiens :code:`4516`, la fonction doit donc retourner  :code:`6->1->5->4->NULL`
+    - :code:`addLinkedLists(5->9->2->NULL, 1->2->2->4->NULL)`, the first linked list represent :code:`295` while the second represent :code:`4221`. If we add these numbers, we obtain :code:`4516`, the function must thus return  :code:`6->1->5->4->NULL`
 environment_id: cpp
 environment_parameters:
     limits:

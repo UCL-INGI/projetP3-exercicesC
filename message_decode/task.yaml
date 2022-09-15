@@ -3,15 +3,15 @@ author: Sébastien Quatresooz Anthony Doeraene
 categories: []
 contact_url: ''
 context: |
-    Vous devez écrire une fonction baptisée filter qui retourne le message contenu dans une liste de noeud. Chaque noeud contient un caractère (utile ou non, nous cherchons à composer des mots), vous devez récupérer ces caractères et retourner le message qu'ils forment. On négligera les signes de ponctuation à l'exception de l'espace. Vous ne devez donc conserver que des caractères alphabétiques ainsi que les espaces
+    You have to write a function called filter which will return the message contained in a list of nodes. Each node contains a character (usefull or not), you must concatenate these characters and return the corresponding phrase . You have to ignore the all characters, excepts letters and spaces.
 
         .. code-block:: c
 
             /**
             * Structure node
             *
-            * @next: pointeur vers le noeud suivant de la liste, NULL si c'est le dernier node_t
-            * @value: valeur contenue dans le noeud
+            * @next: pointer to the following node of the list, NULL if last node
+            * @value: value contained in the node
             */
 
             typedef struct node{
@@ -19,10 +19,10 @@ context: |
               char value;
             } node_t;
 
-    Exemples d'utilisation :
+    Example of use :
 
-    - liste de noeuds : :code:`{'h', 'e', '\\', 'l', 'l', ';', '&', 'o', ' '}` retourne :code:`"hello "`
-    - liste de noeuds : :code:`NULL` retourne :code:`NULL`
+    - list of nodes : :code:`{'h', 'e', '\\', 'l', 'l', ';', '&', 'o', ' '}` returns :code:`"hello "`
+    - list of nodes : :code:`NULL` returns :code:`NULL`
 environment_id: cpp
 environment_parameters:
     limits:
@@ -45,9 +45,9 @@ problems:
                 .. code-block:: c
 
                     /*
-                     *@pre n peut être égale à NULL
-                     *@pre size_mess est la taille du message non filtré
-                     *@post retourne le message filtré, NULL si la liste est vide ou s'il y a une erreur
+                     *@pre n can be NULL
+                     *@pre size_mess : size of the unfiltered message
+                     *@post return the filtered message, NULL if the list is empty or if an error occurred
                      */
                     char* filter(node_t* node, unsigned int size_mess);
         language: c
