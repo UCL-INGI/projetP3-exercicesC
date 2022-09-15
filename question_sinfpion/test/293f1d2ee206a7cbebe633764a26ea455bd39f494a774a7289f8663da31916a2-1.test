@@ -1,0 +1,158 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 4
+    cc_q2: 8
+    nlines_q1: 16
+    nlines_q2: 22
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-09 10:08:18.871869'
+    '@username': test
+    find: |4-
+            if (!head) return -1;
+            int min = head->value;
+            int index = 0;
+            int curr = 1;
+            head = head->next;
+            while(head){
+                if (min > head->value){
+                    min = head->value;
+                    index = curr;
+                }
+                curr++;
+                head = head->next;
+            }
+            return index;
+    remove: |4-
+            if (!head) return -1;
+            int ret = 0;
+            node_l *first = *head;
+            if (MinIndex == 0 && first){
+                *head = first->next;
+                ret = first->value;
+                free(first);
+                return ret;
+            }
+            for (size_t i = 0; i < MinIndex - 1; i++)
+            {
+                if (!first) return -1;
+                first = first->next;
+            }
+            if(!first || !first->next) return -1;
+            node_l *temp = first->next;
+            ret = temp->value;
+            first->next = temp->next;
+            free(temp);
+            return ret;
+problems:
+    find:
+    - success
+    - |+
+        * Test basique pour findIndexMin
+          => réussi (1/1) pts
+        * Test basique pour findMinIndex avec 2 minimums
+          => réussi (1/1) pts
+        * Test basique pour findTheMinIndex avec des nombres négatifs
+          => réussi (1/1) pts
+        * Test head==NULL
+          => réussi (1/1) pts
+    remove:
+    - success
+    - |+
+        * Test basique pour removeTheMinIndex début de liste
+          => réussi (1/1) pts
+        * Test basique pour removeTheMinIndex fin de liste
+          => réussi (1/1) pts
+        * Test basique pour removeTheMinIndex
+          => réussi (1/1) pts
+        * Test pour removeTheMinIndex cas LL vide
+          => réussi (1/1) pts
+        * Test index en dehors de la liste
+          => réussi (1/1) pts
+response_type: rst
+result: success
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      1      0        0
+                 asserts      4      4      4      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts      4      4      4      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts      4      4      4      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test8 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      8      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test9 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      9      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+taskid: question_sinfpion
+tests: {}
+text: |-
+    - Votre code compile.
+    - Votre code a passé tous les tests.

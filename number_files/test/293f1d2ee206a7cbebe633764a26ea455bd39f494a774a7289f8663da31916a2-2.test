@@ -1,0 +1,127 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 8
+    nlines_q1: 20
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-14 11:37:59.687555'
+    '@username': test
+    number_files: |4-
+            struct stat st;
+            if (stat(path, &st) != 0) return -1;
+            if (S_ISREG(st.st_mode)) return 1;
+            DIR *dir = opendir(path);
+            if (!dir) return -2;
+            struct dirent *entry;
+            int sum = 0;
+            while ((entry = readdir(dir)) != NULL){
+                if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) continue;  // skip
+                char buffer[PATH_MAX];              // buffer to contain new path
+                strcpy(buffer, path);
+                strcat(buffer, "/");
+                strcat(buffer, entry->d_name);
+                int temp = get_number_of_files(buffer);
+                if (temp < 0) return temp;
+                sum += temp;
+            }
+            return sum;
+problems:
+    number_files:
+    - success
+    - |+
+        * Test Documents folder
+          => réussi (1/1) pts
+        * Test Downloads folder
+          => réussi (1/1) pts
+        * Test y folder
+          => réussi (1/1) pts
+        * Test for Home folder
+          => réussi (1/1) pts
+          Info: Your code doesn't work correctly. The expected result was 5, but you returned 5
+        * Test with unexisting path
+          => réussi (1/1) pts
+        * Test with failed opendir
+          => réussi (1/1) pts
+        * Test with failed opendir when 2 first opendir succeeded
+          => réussi (1/1) pts
+        * Test with empty folder
+          => réussi (1/1) pts
+response_type: rst
+result: success
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test8 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      8      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+taskid: number_files
+tests: {}
+text: |-
+    - Votre code compile.
+    - Votre code a passé tous les tests.

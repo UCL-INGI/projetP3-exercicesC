@@ -1,0 +1,97 @@
+accessible: true
+author: Hugo Siberdt Anthony Doeraene
+categories: []
+contact_url: ''
+context: |-
+    In this exercice, you'll have to implement a function to add a product to the consumer'shopping cart.
+
+    You'll have to use the following structures:
+
+        .. code-block:: c
+
+            typedef struct
+            {
+                unsigned int price;
+                char * name;
+            } stuff_t;
+
+            typedef struct
+            {
+                stuff_t ** bag;
+                char * name;
+                unsigned int bagSize;
+                unsigned int total;
+                unsigned int budget;
+                char** dontLike;
+                unsigned int size;
+            } consumer_t;
+
+    The client has by default a bag (:code:`bag`) of size :code:`bagsize` filled with empty items (:code:`stuff_t`) (represented by :code:`NULL`).
+    The bag acts as a stack, thus items added to the bag should be put just after the last item bought.
+    The variable :code:`dontLike` is an array of size :code:`size` containing :code:`char*` representing the name of items that the consumer doesn't like.
+
+    We ask you to write a function called :code:`AddStuff`.
+
+    Examples of use:
+
+    Let's suppose a consumer called Maximus, with a bag of size 10 and a budget of 5000, moreover this consumer doesn't like "salad" nor "fish" (:code:`dontLike = ["salad", "fish"]`).
+
+    - :code:`AddStuff(client, "teddy bear", 10);` add to Maximus' bag the "teddy bear" item. There is thus 1 "teddy bear" and 9 empty items in his bag, with a total cost of 10.
+    - :code:`AddStuff(client, "salade", 5);` add nothing to Maximus' bag beacuse he doesn't like salad. There is thus 1 "teddy bear" and 9 empty items in his bag, with a total cost of 10.
+    - :code:`AddStuff(client, "TV", 200);` add to Maximus' bag the "TV" item. There is thus 1 "teddy bear", 1 "TV" and 8 empty items in his bag, with a total cost of 210.
+environment_id: cpp
+environment_parameters:
+    limits:
+        time: '30'
+        hard_time: ''
+        memory: '100'
+    run_cmd: ''
+environment_type: docker
+evaluate: best
+file: ''
+groups: false
+input_random: 0
+name: Consumer
+network_grading: false
+problems:
+    addstuff:
+        type: code
+        name: Add stuff
+        header: |4-
+                .. code-block:: c
+
+                    /**
+                    *
+                    * Add an item to the consumer's bag
+                    *
+                    * Sif the total cost of items in a consumer's bag exceeds his budget, he won't be able to buy the items, thus nothing is added to the bag
+                    * If the client doesn't like the product, he won't buy it and nothing is added to is bag
+                    * If his bag is full (no more empty items), the consumer won't be able to buy it and nothing is done
+                    *
+                    * If the consumer's bag is empty (total = 0), you must initialize it before adding the item to it
+                    *
+                    * @param client: the consumer which will add an item to his bag
+                    * @param name: a string representing the name of the bought item
+                    * @param price: the price of the item (price >= 0)
+                    * @return:  0 if no error
+                    *          -1 if client == NULL or if name == NULL
+                    *          -2 if price > budget
+                    *          -3 if name contained in client->dontLike
+                    *          -4 if malloc fails
+                    *          -5 if client->bag is full of if bagSize == 0
+                    */
+                    void AddStuff(consumer_t* client, char* name, unsigned int price);
+        language: c
+        default: ''
+    auxiliary:
+        type: code
+        name: Méthodes auxiliaires
+        header: Write your auxiliary functions here
+        language: c
+        optional: 'on'
+        default: ''
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0

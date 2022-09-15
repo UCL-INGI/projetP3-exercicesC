@@ -1,0 +1,59 @@
+accessible: true
+author: Sébastien Quatresooz Anthony Doeraene
+categories: []
+contact_url: ''
+context: |
+    You have to write a function called filter which will return the message contained in a list of nodes. Each node contains a character (usefull or not), you must concatenate these characters and return the corresponding phrase . You have to ignore the all characters, excepts letters and spaces.
+
+        .. code-block:: c
+
+            /**
+            * Structure node
+            *
+            * @next: pointer to the following node of the list, NULL if last node
+            * @value: value contained in the node
+            */
+
+            typedef struct node{
+              struct node* next;
+              char value;
+            } node_t;
+
+    Example of use :
+
+    - list of nodes : :code:`{'h', 'e', '\\', 'l', 'l', ';', '&', 'o', ' '}` returns :code:`"hello "`
+    - list of nodes : :code:`NULL` returns :code:`NULL`
+environment_id: cpp
+environment_parameters:
+    limits:
+        time: '30'
+        hard_time: ''
+        memory: '100'
+    run_cmd: ''
+environment_type: docker
+evaluate: best
+file: ''
+groups: false
+input_random: 0
+name: Decode message
+network_grading: false
+problems:
+    decode:
+        type: code
+        name: Decode
+        header: |4-
+                .. code-block:: c
+
+                    /*
+                     *@pre n can be NULL
+                     *@pre size_mess : size of the unfiltered message
+                     *@post return the filtered message, NULL if the list is empty or if an error occurred
+                     */
+                    char* filter(node_t* node, unsigned int size_mess);
+        language: c
+        default: ''
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0

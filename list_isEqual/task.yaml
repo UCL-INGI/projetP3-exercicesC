@@ -1,0 +1,71 @@
+accessible: true
+author: Corentin Deruyck Anthony Doeraene
+categories: []
+contact_url: ''
+context: |-
+    .. role:: c(code)
+        :language: c
+
+    Write a function called :c:`is_equivalent` which will check if two circular linked list are equivalents (containing the same values)
+    As circular linked list doesn't have a start nor an end, the function will take as parameter a node of the linked list.
+
+    To represent a circular linked list, use the following structure:
+
+    .. code-block:: c
+
+        typedef struct node {
+            struct node *next;
+            int value;
+        } node_t;
+
+    An exemple of a circular linked list is given below:
+
+    .. image:: https://inginious.org/admin/uclouvain-lepl1503/edit/task/list_isEqual/files?action=download&path=/student/image.png
+
+    And here's an exemple of use of the function:
+
+        .. code-block::
+
+            noeud first (pointer to node containg 1) : 1->3->4->5->first node (1)
+            noeud second (pointer to node containg 5) : 5->1->3->4->first node (5)
+
+            is_equivalent(first, second, 4) returns 1 (They are the same linked list)
+environment_id: cpp
+environment_parameters:
+    limits:
+        time: '30'
+        hard_time: ''
+        memory: '100'
+    run_cmd: ''
+environment_type: docker
+evaluate: best
+file: ''
+groups: false
+input_random: 0
+name: List Equivalence
+network_grading: false
+problems:
+    isequivalent:
+        type: code
+        name: Is equivalent
+        header: |4-
+                .. code-block:: c
+
+                    /*
+                    * Check if two circular linked lists are equivalent
+                    *
+                    * @first: a pointer to one of the node of a circular list of size "size"
+                    * @second: a pointer to one of the node of another circular list of size "size"
+                    * @size: the size of circular lists
+                    *
+                    * @return: 1 if they are equivalent, 0 otherwise
+                    *
+                    */
+                    int is_equivalent(node_t* first, node_t* second, int size){
+        language: c
+        default: ''
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0

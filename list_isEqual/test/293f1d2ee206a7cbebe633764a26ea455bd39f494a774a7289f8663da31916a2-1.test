@@ -1,0 +1,176 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 5
+    nlines_q1: 21
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-08-30 09:53:09.768661'
+    '@username': test
+    isequivalent: |4-
+            int ok;
+            //check with an other start position for the second circular linked list
+            for(int i = 0; i < size; i++) {
+                node_t * tmp_a = first;
+                node_t * tmp_b = second;
+                ok = 1;
+                //check if with a start position they are the same
+                for(int j = 0; j < size; j++) {
+                    if(tmp_a->value != tmp_b->value) {
+                        ok = 0;
+                        break;
+                    }
+                    tmp_a = tmp_a->next;
+                    tmp_b = tmp_b->next;
+                }
+                //if 1 every element are the same with this start config (they are the same)
+                if (ok==1) {
+                    return 1;
+                }
+                //otherwise we change the start configuration
+                second = second->next;
+            }
+            //we have test all the start position and they are not the same
+            return 0;
+problems:
+    isequivalent:
+    - success
+    - |+
+        * Test simple avec deux listes circulaires équivalentes
+          => réussi (1/1) pts
+        * Test simple avec deux listes circulaires équivalentes
+          => réussi (1/1) pts
+        * Test avec deux listes circulaires équivalentes de taille 1
+          => réussi (1/1) pts
+        * Test simple avec deux listes circulaires NON équivalentes
+          => réussi (1/1) pts
+        * Test simple avec deux listes circulaires NON équivalentes
+          => réussi (1/1) pts
+        * Test avec deux listes circulaires NON équivalentes de taille 1
+          => réussi (1/1) pts
+        * Test avec deux listes circulaires équivalentes alignées
+          => réussi (1/1) pts
+        * Test avec deux listes circulaires NON équivalentes (seul le dernier élément change)
+          => réussi (1/1) pts
+        * Test avec deux listes circulaires NON équivalentes (seul le premier élément change)
+          => réussi (1/1) pts
+        * Test avec deux listes circulaires équivalentes décalage de 1
+          => réussi (1/1) pts
+        * Test avec deux listes circulaires équivalentes décalage de size-1
+          => réussi (1/1) pts
+        * Test avec deux listes circulaires équivalentes contenant les mêmes valeurs
+          => réussi (1/1) pts
+response_type: rst
+result: success
+state: ''
+status: done
+stderr: |
+    Traceback (most recent call last):
+      File "/task/run", line 165, in <module>
+        problems = yaml.load(stream)['problems']
+    TypeError: load() missing 1 required positional argument: 'Loader'
+stdout: |4+
+    ==== Results for test test1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test8 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      8      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test9 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      9      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test10 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     10      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test11 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     11      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test12 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     12      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+taskid: list_isEqual
+tests: {}
+text: |-
+    - Votre code compile.
+    - Votre code a passé tous les tests.

@@ -1,0 +1,150 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 2
+    cc_q2: 9
+    cc_q3: 1
+    nlines_q1: 6
+    nlines_q2: 29
+    nlines_q3: 4
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-03 11:15:58.529839'
+    '@username': test
+    add_list: |-
+        node_t *ret = addHelp(head1, head2, NULL, 0);
+        return reverse(ret, NULL);
+    auxiliary: |-
+        node_t *reverse(node_t *head, node_t *acc){
+            if (head == NULL) return acc;
+            node_t *temp = head->next;
+            head->next = acc;
+            return reverse(temp, head);
+        }
+        node_t *addHelp(node_t *first, node_t *second, node_t *acc, int carry){
+            if (first == NULL && second == NULL && carry == 0) return acc;
+            node_t *new = malloc(sizeof(node_t));
+            if (new == NULL) return NULL;
+            if (first == NULL && second == NULL){
+                new->val = carry;
+                new->next = acc;
+                return addHelp(NULL, NULL, new, 0);
+            }
+            if (first == NULL){
+                int value = (second->val + carry) % 10;
+                int rem = (second->val + carry) / 10;
+                new->val = value;
+                new->next = acc;
+                return addHelp(NULL, second->next, new, rem);
+            }
+            if (second == NULL){
+                int value = (first->val + carry) % 10;
+                int rem = (first->val + carry) / 10;
+                new->val = value;
+                new->next = acc;
+                return addHelp(first->next, NULL, new, rem);
+            }
+            int value = (first->val + second->val + carry) % 10;
+            int rem = (first->val + second->val + carry) / 10;
+            new->val = value;
+            new->next = acc;
+            return addHelp(first->next, second->next, new, rem);
+        }
+problems:
+    add_list:
+    - success
+    - |+
+        * Test somme de [1,2,3] et [2, 3, 4]
+          => réussi (1/1) pts
+        * Test somme de [9, 9, 9] et [1]
+          => réussi (1/1) pts
+        * Test somme de [5, 9, 2] et [1, 2, 2, 4]
+          => réussi (1/1) pts
+        * Test somme de [0] et [1, 2, 3, 4]
+          => réussi (1/1) pts
+        * Test somme de [1,2, 3, 4] et [0]
+          => réussi (1/1) pts
+        * Test somme de [0] et [0]
+          => réussi (1/1) pts
+        * Test somme de [9, 9, 9, 9, 9, 9] et [9, 9, 9]
+          => réussi (1/1) pts
+        * Test malloc fail
+          => réussi (1/1) pts
+response_type: rst
+result: success
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test8 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      8      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+taskid: add_list
+tests: {}
+text: |-
+    - Votre code compile.
+    - Votre code a passé tous les tests.

@@ -1,0 +1,134 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 4
+    cc_q2: 3
+    nlines_q1: 9
+    nlines_q2: 8
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-08 10:14:52.525666'
+    '@username': test
+    auxiliary: |-
+        void in_order_help(tree_t *tree, int *buffer, int offset){
+            if (!tree) return;
+            int newOffset = 0;
+            in_order_help(tree->left, buffer, offset);
+            if (tree->left) newOffset += tree->left->number_elements;
+            *(buffer + offset + newOffset) = tree->value;
+            newOffset++;
+            if (tree->right) in_order_help(tree->right, buffer, offset+newOffset);
+        }
+    inorder: |-
+        int *ret = malloc(1);
+        if (!tree) return NULL;
+        ret = malloc(tree->number_elements*sizeof(int));
+        if (!ret) return NULL;
+        in_order_help(tree, ret, 0);
+        return ret;
+problems:
+    inorder:
+    - failed
+    - |+
+        * Test in-order for a simple balanced binary tree
+          => échoué (0/1) pts
+          Info: You didn't free all your memory : called malloc 2 times and free 0 times
+        * Test in-order linear binary tree (only right child)
+          => échoué (0/1) pts
+          Info: You didn't free all your memory : called malloc 2 times and free 0 times
+        * Test in-order linear binary tree (only left child)
+          => échoué (0/1) pts
+          Info: You didn't free all your memory : called malloc 2 times and free 0 times
+        * Test in-order binary tree (with missing right/left children)
+          => échoué (0/1) pts
+          Info: You didn't free all your memory : called malloc 2 times and free 0 times
+        * Test in-order binary tree (random tree)
+          => échoué (0/1) pts
+          Info: You didn't free all your memory : called malloc 2 times and free 0 times
+        * Test in-order binary tree with failed malloc
+          => réussi (1/1) pts
+        * Test in-order binary tree with NULL tree
+          => échoué (0/1) pts
+          Info: Why did you call any malloc ?
+response_type: rst
+result: failed
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test1 had failures:
+        1. tests.c:123  - CU_ASSERT_EQUAL(stats.malloc.called - stats.free.called,1)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      0      1        0
+                 asserts      4      4      3      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test2 had failures:
+        1. tests.c:164  - CU_ASSERT_EQUAL(stats.malloc.called - stats.free.called,1)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      0      1        0
+                 asserts      4      4      3      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test3 had failures:
+        1. tests.c:203  - CU_ASSERT_EQUAL(stats.malloc.called - stats.free.called,1)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      0      1        0
+                 asserts      4      4      3      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test4 had failures:
+        1. tests.c:241  - CU_ASSERT_EQUAL(stats.malloc.called - stats.free.called,1)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      0      1        0
+                 asserts      8      8      7      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test5 had failures:
+        1. tests.c:295  - CU_ASSERT_EQUAL(stats.malloc.called - stats.free.called,1)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test7 had failures:
+        1. tests.c:376  - stats.malloc.called == 0
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      0      1        0
+                 asserts      3      3      2      1      n/a
+    Elapsed time =    0.000 seconds
+taskid: inorder
+tests: {}
+text: |-
+    - Votre code compile.
+    - Il y a des erreurs dans votre solution.

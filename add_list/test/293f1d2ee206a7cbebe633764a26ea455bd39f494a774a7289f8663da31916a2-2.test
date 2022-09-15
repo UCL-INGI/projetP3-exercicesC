@@ -1,0 +1,134 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 12
+    nlines_q1: 27
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-03 11:05:26.995701'
+    '@username': test
+    add_list: |4-
+            node_t *ans = (node_t *)malloc(sizeof(node_t));
+            if (ans == NULL) return NULL;
+            node_t *current = ans;
+            node_t *current1 = head1;
+            node_t *current2 = head2;
+            int report = 0;
+            while (current1 != NULL || current2 != NULL){
+                int tmp = (current1 != NULL ? current1->val : 0) + (current2 != NULL ? current2->val : 0) + report;
+                if (tmp >= 10) report = 1;
+                else report = 0;
+                current->next = (node_t *)malloc(sizeof(node_t));
+                if (current->next == NULL) return NULL;
+                current->next->val = tmp % 10;
+                current = current->next;
+                if (current1 != NULL) current1 = current1->next;
+                if (current2 != NULL) current2 = current2->next;
+            }
+            if (report > 0){
+                current->next = (node_t *)malloc(sizeof(node_t));
+                if (current->next == NULL) return NULL;
+                current->next->val = 1;
+                current = current->next;
+            }
+            current->next = NULL;
+            return ans->next;
+    auxiliary: ''
+problems:
+    add_list:
+    - success
+    - |+
+        * Test somme de [1,2,3] et [2, 3, 4]
+          => réussi (1/1) pts
+        * Test somme de [9, 9, 9] et [1]
+          => réussi (1/1) pts
+        * Test somme de [5, 9, 2] et [1, 2, 2, 4]
+          => réussi (1/1) pts
+        * Test somme de [0] et [1, 2, 3, 4]
+          => réussi (1/1) pts
+        * Test somme de [1,2, 3, 4] et [0]
+          => réussi (1/1) pts
+        * Test somme de [0] et [0]
+          => réussi (1/1) pts
+        * Test somme de [9, 9, 9, 9, 9, 9] et [9, 9, 9]
+          => réussi (1/1) pts
+        * Test malloc fail
+          => réussi (1/1) pts
+response_type: rst
+result: success
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test8 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      8      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+taskid: add_list
+tests: {}
+text: |-
+    - Votre code compile.
+    - Votre code a passé tous les tests.

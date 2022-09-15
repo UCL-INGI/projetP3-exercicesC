@@ -1,0 +1,71 @@
+accessible: true
+author: Jean-Pierre Sagdic Anthony Doeraene
+categories: []
+contact_url: ''
+context: |-
+    You have to write a function called linked_list_to_matrix which returns a matrix of size
+    n*m (n rows, m columns) containing the values of the linked list lst. For example,
+    with the linked list containing the following values : :code:`first -> 1-2-3-4-5-6-7-8-9`
+
+        .. code-block::
+
+            pour n=3, m=3 renvoie : [[1 2 3]
+                                     [4 5 6]
+                                     [7 8 9]]
+
+            pour n=2, m=3 renvoie : [[1 2 3]
+                                     [4 5 6]]
+
+            pour n=3, m=4 renvoie : [[1  2  3  4]
+                                     [5  6  7  8]
+                                     [9 -1 -1 -1]]
+
+    Note that if there isn't enough values in the linked list to fill the matrix, the remaining empty cells should contain :code:`-1`.
+
+    Here's the definition of the linked list :
+
+        .. code-block:: c
+
+            typedef struct node{
+                struct node* next;
+                int value;
+            } node_t;
+
+            typedef struct list{
+                struct node* first;
+                int size;
+            } list_t;
+environment_id: cpp
+environment_parameters:
+    limits:
+        time: '30'
+        hard_time: ''
+        memory: '100'
+    run_cmd: ''
+environment_type: docker
+evaluate: best
+file: ''
+groups: false
+input_random: 0
+name: To the matrix
+network_grading: false
+problems:
+    transform:
+        type: code
+        name: Linked List to Matrix
+        header: |4-
+                .. code-block:: c
+
+                    /*
+                     *@pre lst!=NULL, n>0, m>0
+                     *@post return a matrix of size n*m containing the values of the linked list
+                     *      return NULL if malloc fails
+                     */
+                    int** linked_list_to_matrix(list_t *lst, int n, int m);
+        language: c
+        default: ''
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0

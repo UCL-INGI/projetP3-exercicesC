@@ -1,0 +1,306 @@
+courseid: uclouvain-lepl1503
+custom:
+    cc_q1: 1
+    cc_q2: 6
+    cc_q3: 3
+    cc_q4: 3
+    nlines_q1: 7
+    nlines_q2: 25
+    nlines_q3: 9
+    nlines_q4: 8
+input:
+    '@attempts': '0'
+    '@email': test@test
+    '@lang': en
+    '@random': []
+    '@state': ''
+    '@time': '2022-09-12 10:24:27.215200'
+    '@username': test
+    dequeue: |4-
+            letter_t *ret = q->front;
+            if (ret == NULL) return NULL;
+            q->front = ret->next;
+            q->size--;
+            ret->next = NULL;
+            if (q->front == NULL) q->rear = NULL;
+            return ret;
+    priority_enqueue: |4-
+            if (!letter) return -1;
+            q->size++;
+            if (!q->front){
+                q->front = letter;
+                q->rear = letter;
+                return 0;
+            }
+            letter_t *runner = q->front;
+            if (runner->priority < letter->priority){
+                letter->next = q->front;
+                q->front = letter;
+                return 0;
+            }
+            while (runner->next){
+                if (runner->next->priority < letter->priority){
+                    letter->next = runner->next;
+                    runner->next = letter;
+                    return 0;
+                }
+            }
+            q->rear = letter;
+            runner->next = letter;
+            return 0;
+    process_letters: |4-
+            letter_t *ret = dequeue(post_office_queue);
+            while(ret){
+                if (priority_enqueue(*(continents_queue + ret->continent), ret)) return -1;
+                ret = dequeue(post_office_queue);
+            }
+            return 0;
+problems:
+    dequeue:
+    - success
+    - |+
+        * Dequeue in an empty queue
+          => réussi (1/1) pts
+        * Redefinition of front and rear when dequeuing a queue with 1 letters
+          => réussi (1/1) pts
+        * Update of queue size when dequeuing a queue with 1 letters
+          => réussi (1/1) pts
+        * Redefinition of front and rear when dequeuing a queue with 2 letters
+          => réussi (1/1) pts
+        * Update of queue size when dequeuing a queue with 3 letters
+          => réussi (1/1) pts
+        * Dequeuing correct element from a queue with 3 letters (FIFO)
+          => réussi (1/1) pts
+        * Redefinition of front when dequeuing a queue with 3 letters
+          => réussi (1/1) pts
+    priority_enqueue:
+    - failed
+    - |+
+        * Update of queue size when enqueuing to an empty queue
+          => réussi (1/1) pts
+        * Redefinition of front and rear after enqueuing a letter to an empty queue
+          => réussi (1/1) pts
+        * Update of queue size when enqueuing to a queue with 1 element
+          => réussi (1/1) pts
+        * Redefinition of front and rear when enqueuing a letter without priority in a queue that has a letter without priority
+          => réussi (1/1) pts
+        * Redefinition of front and rear when enqueuing a letter with priority in a queue that has a letter without priority
+          => réussi (1/1) pts
+        * Redefinition of front and rear when enqueuing a letter without priority in a queue that has a letter with priority
+          => réussi (1/1) pts
+        * Redefinition of front and rear when enqueuing a letter with priority in a queue that has a letter with priority
+          => réussi (1/1) pts
+        * Redefinition of front and rear when enqueuing a letter withouth priority in a queue with 2 letters. The first has priority, the second doesn't
+          => échoué (0/1) pts
+          Info: Your code exceeded the maximal allowed execution time. — Wrong queue : initial Queue (size = 2) [Letter(continent : 0, priority : 1, name : A), Letter(continent : 0, priority : 0, name : B)] when pushing Letter(continent : 0, priority : 0, name : C), but you returned Queue (size = 3) [Letter(continent : 0, priority : 1, name : A), Letter(continent : 0, priority : 0, name : B), ]
+        * Redefinition of front and rear when enqueuing a letter with priority in a queue with 2 letters. The first has priority, the second doesn't
+          => réussi (1/1) pts
+        * Return -1 when @letter is NULL
+          => réussi (1/1) pts
+    process_letters:
+    - failed
+    - |+
+        * Dequeued letter from the post office queue is enqueued in the correct continent queue
+          => réussi (1/1) pts
+        * Function returns -1 when the post office queue is empty
+          => échoué (0/1) pts
+          Info: You should return -1 when the post office queue is empty
+        * General case
+          => échoué (0/1) pts
+          Info: Your code exceeded the maximal allowed execution time. — Your code produced a segfault. — You did some errors in the queue(s) : [Europe America Oceania Africa Asia ]
+response_type: rst
+result: success
+state: ''
+status: done
+stderr: ''
+stdout: |4+
+    ==== Results for test test_dequeue_1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      1      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_dequeue_2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      2      1      1      0        0
+                 asserts      2      2      2      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_dequeue_3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      3      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_dequeue_4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      4      1      1      0        0
+                 asserts      2      2      2      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_dequeue_5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      5      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_dequeue_6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      6      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_dequeue_7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      7      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_enqueue_1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      8      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_enqueue_2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests      9      1      1      0        0
+                 asserts      2      2      2      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_enqueue_3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     10      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_enqueue_4 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     11      1      1      0        0
+                 asserts      2      2      2      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_enqueue_5 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     12      1      1      0        0
+                 asserts      2      2      2      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_enqueue_6 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     13      1      1      0        0
+                 asserts      2      2      2      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_enqueue_7 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     14      1      1      0        0
+                 asserts      2      2      2      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_enqueue_8 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test_enqueue_8 had failures:
+        1. CTester.c:171  - CU_FAIL("Segfault or timeout")
+        2. tests.c:479  - CU_ASSERT_EQUAL(expected_rear,q->rear->name)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     15      1      0      1        0
+                 asserts      3      3      1      2      n/a
+    Elapsed time =    1.994 seconds
+    ==== Results for test test_enqueue_9 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     16      1      1      0        0
+                 asserts      2      2      2      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_enqueue_10 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     17      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_process_letters_1 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     18      1      1      0        0
+                 asserts      1      1      1      0      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_process_letters_2 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test_process_letters_2 had failures:
+        1. tests.c:578  - CU_ASSERT_EQUAL(expected_res,res)
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     19      1      0      1        0
+                 asserts      1      1      0      1      n/a
+    Elapsed time =    0.000 seconds
+    ==== Results for test test_process_letters_3 : ====
+         CUnit - A unit testing framework for C - Version 2.1-3
+         http://cunit.sourceforge.net/
+    Suite Suite_1, Test test_process_letters_3 had failures:
+        1. CTester.c:171  - CU_FAIL("Segfault or timeout")
+        2. CTester.c:171  - CU_FAIL("Segfault or timeout")
+        3. tests.c:654  - CU_ASSERT_EQUAL(expected_res_Europe[i],res_Europe[i])
+        4. tests.c:654  - CU_ASSERT_EQUAL(expected_res_Europe[i],res_Europe[i])
+        5. tests.c:654  - CU_ASSERT_EQUAL(expected_res_Europe[i],res_Europe[i])
+        6. tests.c:654  - CU_ASSERT_EQUAL(expected_res_Europe[i],res_Europe[i])
+        7. tests.c:660  - CU_ASSERT_EQUAL(expected_res_America[0],res_America[0])
+        8. tests.c:662  - CU_ASSERT_EQUAL(expected_res_Asia[i],res_Asia[i])
+        9. tests.c:662  - CU_ASSERT_EQUAL(expected_res_Asia[i],res_Asia[i])
+        10. tests.c:669  - CU_ASSERT_EQUAL(expected_res_Oceania[i],res_Oceania[i])
+        11. tests.c:669  - CU_ASSERT_EQUAL(expected_res_Oceania[i],res_Oceania[i])
+        12. tests.c:669  - CU_ASSERT_EQUAL(expected_res_Oceania[i],res_Oceania[i])
+        13. tests.c:676  - CU_ASSERT_EQUAL(expected_res_Africa[i],res_Africa[i])
+        14. tests.c:676  - CU_ASSERT_EQUAL(expected_res_Africa[i],res_Africa[i])
+        15. tests.c:676  - CU_ASSERT_EQUAL(expected_res_Africa[i],res_Africa[i])
+        16. tests.c:684  - CU_ASSERT_EQUAL(expected_res_Asia[i],res_Asia[i])
+        17. tests.c:684  - CU_ASSERT_EQUAL(expected_res_Asia[i],res_Asia[i])
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                  suites      1      0    n/a      0        0
+                   tests     20      1      0      1        0
+                 asserts     18     18      1     17      n/a
+    Elapsed time =    1.995 seconds
+taskid: post_office
+tests:
+    sigsegv: true
+    timeout: true
+text: |-
+    - Votre code compile.
+    - Il y a des erreurs dans votre solution.
